@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Tank : a Neo4j cypher graph browser based on sigmajs">
+    <meta name="author" content="Benoît Simard (@logisima)">
+
+    <link href="../build/css/main.css" rel="stylesheet">
+
+    <!-- START SIGMA IMPORTS -->
+    <script src="../node_modules/sigma/build/sigma.min.js"></script>
+    <script src="../node_modules/sigma/build/plugins/sigma.layout.forceAtlas2.min.js"></script>
+    <script src="../node_modules/sigma/build/plugins/sigma.layout.forceAtlas2.min.js"></script>
+    <script src="../node_modules/sigma/build/plugins/sigma.parsers.json.min.js"></script>
+    <script src="../node_modules/sigma/build/plugins/sigma.plugins.animate.min.js"></script>
+    <script src="../node_modules/sigma/build/plugins/sigma.plugins.dragNodes.min.js"></script>
+    <script src="../node_modules/sigma/build/plugins/sigma.plugins.filter.min.js"></script>
+    <script src="../node_modules/sigma/build/plugins/sigma.plugins.neighborhoods.min.js"></script>
+    <script src="../node_modules/sigma/build/plugins/sigma.renderers.customShapes.min.js"></script>
+    <script src="../node_modules/sigma/build/plugins/sigma.statistics.HITS.min.js"></script>
+    <!-- END SIGMA IMPORTS -->
+
+    <!-- Code mirror-->
+    <link href="../node_modules/codemirror/lib/codemirror.css" rel="stylesheet">
+    <link href="../node_modules/codemirror/theme/neo.css" rel="stylesheet">
+    <script src="../node_modules/codemirror/lib/codemirror.js"></script>
+    <script src="../node_modules/codemirror/mode/cypher/cypher.js"></script>
+
+    <title>Neo4j cypher graph browser</title>
+</head>
+<body>
+
+<header class="navbar navbar-fixed-top" role="banner">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="brand" href="/" title="Benoît Simard">
+                <img class="baseline" src="images/bsimard.png" alt="Benoît Simard">
+                <h1>Cypher Browser</h1>
+            </a>
+        </div>
+        <nav class="collapse navbar-collapse bs-navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main class="bs-docs-masthead" id="content" role="main">
+
+    <div class="container-fluid">
+        <div id="tank-container"></div>
+    </div>
+
+        <div id="panel">
+            <ul class="list-unstyled">
+                <li id="graph-tab" class="active">
+                    <a class="tabsheet-link" href="#"><i class="fa fa-pie-chart fa-2x"></i></a>
+                    <div  class="tabsheet">
+                        <fieldset>
+                            <legend>Statistiques</legend>
+                            <ul>
+                                <li><span id="numberOfNode">0</span> nodes</li>
+                                <li><span id="numberOfEdge">0</span> eges</li>
+                            </ul>
+                        </fieldset>
+                        <fieldset>
+                            <legend>Labels</legend>
+                            <ul id="labels"></ul>
+                        </fieldset>
+                        <fieldset>
+                            <legend>Types</legend>
+                            <ul id="types"></ul>
+                        </fieldset>
+                    </div>
+                </li>
+                <li id="history-tab">
+                    <a class="tabsheet-link" href="#"><i class="fa fa-history fa-2x"></i></a>
+                    <div class="tabsheet">
+                        <ul id="history-list" class="list-unstyled cm-s-neo">
+
+                        </ul>
+                    </div>
+                </li>
+                <li id="favorite-tab">
+                    <a class="tabsheet-link" href="#"><i class="fa fa-star fa-2x"></i></a>
+                    <div  class="tabsheet">
+                        <ul id="favorite-list" class="list-unstyled cm-s-neo">
+
+                        </ul>
+                    </div>
+                </li>
+                <li id="config-tab" class="pull-right ">
+                    <a class="tabsheet-link" href="#"><i class="fa fa-cogs fa-2x"></i></a>
+                    <div class="tabsheet">
+                        <label for="server">Server URL</label>
+                        <input id="server" type="text" class="tank-settings form-control" placeholder="http://localhost:7474" value="http://localhost:7474">
+                        <label for="forceAtlas2Time">Force Atlas time</label>
+                        <input id="forceAtlas2Time" type="range" class="tank-settings form-control" min="1000" max="60000" step="1000" value="5000">
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div id="graph-container"></div>
+    </div>
+
+    <div class="container-fluid">
+        <div id="cypher">
+            <textarea id="cypher-query" class="center-block">MATCH (n) OPTIONAL MATCH (n)-[r]->(m) RETURN n,r,m LIMIT 100</textarea>
+            <ul class="pull-right list-inline list-unstyled">
+                <li><button id="save" class="btn btn-default"><i class="fa fa-save fa-3"></i></button></li>
+                <li><button id="run" class="btn btn-default"><i class="fa fa-play fa-3"></i></button></li>
+            </ul>
+
+        </div>
+    </div>
+</main>
+
+<footer class="bs-docs-footer" role="contentinfo">
+    <div class="container-fluid">
+        <ul class="center-block list-inline list-unstyled">
+            <li>v0.0.1</li>
+            <li>|</li>
+            <li><a href="https://github.com/sim51">@logisima</a></li>
+        </ul>
+    </div>
+</footer>
+
+<script src="../build/js/main.js"></script>
+<script>
+    /**
+     * When document is ready , we initialize the application.
+     */
+
+</script>
+
+<!-- START LINKURIOUS IMPORTS -->
+<script src="../node_modules/linkurious/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.nodes.def.js"></script>
+<!-- END LINKURIOUS IMPORTS -->
+</body>
+</html>
+

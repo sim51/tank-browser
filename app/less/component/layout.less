@@ -1,0 +1,113 @@
+// --------------------------------------------------
+// Some global styme
+// --------------------------------------------------
+body {
+  background-color: @background;
+  font-family: @ftPrimary;
+  height: 100%;
+}
+
+body {
+  background-color: @background;
+  font-family: @ftPrimary;
+  height: 100%;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: @ftSecondary;
+  color: @quaternary;
+}
+
+h1, h2 {
+  font-weight: normal;
+}
+
+h1 {
+  margin: 30px 0 50px 0;
+}
+
+h2 {
+  text-transform: uppercase;
+  margin-top: 20px;
+  font-weight: normal;
+}
+
+h3 {
+  font-size: 16px;
+}
+
+a {
+  color: @primary;
+}
+
+// --------------------------------------------------
+// Layout : header
+// --------------------------------------------------
+header.navbar {
+  & {
+    height: @layout-header-height;
+    background-color: @white;
+    background-image: none;
+    box-shadow: 0px 0px 10px @secondary;
+
+    .navbar-header {
+      height: @layout-header-height;
+
+      .brand {
+        height: @layout-header-height;
+        line-height: @layout-header-height;
+        img {
+          height: 75%;
+        }
+
+        h1 {
+          color: @secondary;
+          font-size: 1.7em;
+          line-height: 26px;
+          text-transform: uppercase;
+          text-shadow: 1px 0 rgba(0, 0, 0, 0.25);
+          display: inline-block;
+          padding: 0 0 0 30px;
+          margin: 0px;
+        }
+      }
+    }
+  }
+}
+
+// --------------------------------------------------
+// Layout : Main content
+// --------------------------------------------------
+main#content {
+  padding: @layout-header-height 0;
+
+  #panel {
+    top: @layout-header-height;
+    bottom: @layout-footer-height;
+    left: 0;
+    right: percentage(1 - @layout-panel-width-ratio);
+    position: absolute;
+    box-shadow: 0px 0px 10px @quaternary;
+  }
+
+  #graph-container {
+    top: @layout-header-height;
+    bottom: @layout-footer-height;
+    left: percentage(1 - @layout-graph-width-ratio);
+    right: 0;
+    position: absolute;
+  }
+}
+
+// --------------------------------------------------
+// Layout : footer
+// --------------------------------------------------
+footer {
+  position: fixed;
+  bottom: 0;
+  background-color: @secondary;
+  height: @layout-footer-height;
+  width: 100%;
+  color: @white;
+  text-align: center;
+}

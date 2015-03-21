@@ -1,0 +1,43 @@
+#panel {
+  & > ul {
+    display: block;
+    height: @layout-panel-nav-height;
+    box-shadow: -5px 0px 10px @quaternary;
+    background-color: @quaternary;
+
+    & > li {
+      float: left;
+      display: inline-block;
+      height: @layout-panel-nav-height;
+      margin-top: 5px;
+
+      & > a {
+        display: block;
+        padding: 10px;
+        color: @white;
+      }
+
+      .tabsheet {
+        display: none;
+        left: 0;
+        width: 100%;
+        position: absolute;
+        margin-top: 20px;
+      }
+
+      &.active {
+        a {
+          color: @quaternary;
+          background-color: @white;
+        }
+        .tabsheet {
+          display: block;
+
+        }
+      }
+
+    }
+
+  }
+
+}

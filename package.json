@@ -1,0 +1,30 @@
+{
+    "name": "neo4j-tank",
+    "version": "0.0.1",
+    "description" : "A neo4j cypher browser based on sigmajs",
+    "devDependencies": {
+        "gulp": "^3.5.5",
+        "gulp-util": "^2.2.14",
+        "gulp-jshint": "^1.5.0",
+        "gulp-less": "^1.2.2",
+        "gulp-concat": "^2.1.7",
+        "gulp-livereload": "^1.2.0",
+        "gulp-uglify": "^0.2.1",
+        "gulp-exec": "^1.0.4",
+        "gulp-minify-css": "^0.3.0",
+        "gulp-clean": "^0.2.4",
+        "gulp-connect": "^2.0.5",
+        "gulp-watch": "^0.5.4",
+        "connect": "^2.14.4",
+        "gulp-sourcemaps": "^1.5.1"
+    },
+    "dependencies": {
+        "underscore" : "^1.8.2",
+        "mustache" : "^1.1.0",
+        "linkurious" : "https://github.com/Linkurious/linkurious.js/archive/v1.0.6.tar.gz",
+        "sigma": "https://github.com/sim51/sigma.js/archive/master.tar.gz",
+        "bootstrap": "^3.3.2",
+        "codemirror": "^5.0.0",
+        "font-awesome" : "^4.3.0"
+    }
+}
