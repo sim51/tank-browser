@@ -1,5 +1,4 @@
-;
-(function (undefined) {
+;(function (undefined) {
     'use strict';
 
     if (typeof tank === 'undefined')
@@ -20,16 +19,12 @@
             query: 'MATCH (n) OPTIONAL MATCH (n)-[r]->(m) RETURN n,r,m LIMIT 100'
         },
         // Custome labels & types array
-        labels : [], // must contain object like {  name: 'my label' , color : '#FFFFFF' }
-        types : [], // must contain object like {  name: 'my type' , color : '#FFFFFF' }
+        labels: [], // must contain object like {  name: 'my label' , color : '#FFFFFF' }
+        types: [], // must contain object like {  name: 'my type' , color : '#FFFFFF' }
 
-        // Config module
+        // Plugin list
         // ===========================
-        // List all comonent
-        components: ['panel', 'query', 'sigmajs'],
-        // List all plugins
         plugins: ['config', 'favorite', 'graph', 'history', 'codemirror' ],
-
 
         // General config
         // ===========================

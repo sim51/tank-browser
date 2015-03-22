@@ -5,12 +5,12 @@
         throw 'tank is not declared';
 
     // Create panel package
-    sigma.utils.pkg('tank.panels.classes.graph');
+    sigma.utils.pkg('tank.classes.plugins.graph');
 
     /**
      * The init function.
      */
-    tank.panels.classes.graph = function (tank) {
+    tank.classes.plugins.graph = function (tank) {
         this.labels = [];
         this.types = [];
         this.jscolor = jscolor;
@@ -26,7 +26,7 @@
     /**
      * The refresh function.
      */
-    tank.panels.classes.graph.prototype.refresh = function () {
+    tank.classes.plugins.graph.prototype.refresh = function () {
         var i, j, label, node, nodes, edge, edges, type;
 
         // reset counter
@@ -87,7 +87,7 @@
     /**
      * The eventListerner function.
      */
-    tank.panels.classes.graph.prototype.eventListener = function () {
+    tank.classes.plugins.graph.prototype.eventListener = function () {
         var j,id;
 
         // Change color on a type
@@ -114,7 +114,7 @@
     /**
      * Function that display labels in graph panel.
      */
-    tank.panels.classes.graph.prototype.displayLabels = function () {
+    tank.classes.plugins.graph.prototype.displayLabels = function () {
         var i = 0, html = '';
         for (i in tank.instance().panels.graph.labels) {
             html += '<li>' +
@@ -129,7 +129,7 @@
     /**
      * Function that display types in graph panel.
      */
-    tank.panels.classes.graph.prototype.displayTypes = function () {
+    tank.classes.plugins.graph.prototype.displayTypes = function () {
         var i = 0, html = '';
         for (i in tank.instance().panels.graph.types) {
             html += '<li>' +

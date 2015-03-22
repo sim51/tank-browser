@@ -5,18 +5,18 @@
         throw 'tank is not declared';
 
     // Create panel package
-    sigma.utils.pkg('tank.panels.classes.config');
+    sigma.utils.pkg('tank.classes.plugins.config');
 
     /**
      * The init function.
      *
      * @param {tank}    the related tank instance
      */
-    tank.panels.classes.config = function (s) {
+    tank.classes.plugins.config = function (tank) {
 
         // Init variables:
         var _self = this,
-            _s = s;
+            _t = tank;
 
         _self.refresh();
     };
@@ -24,7 +24,7 @@
     /**
      * The refresh function.
      */
-    tank.panels.classes.config.prototype.refresh = function() {
+    tank.classes.plugins.config.prototype.refresh = function() {
         for(var key in tank.settings ) {
             if (document.getElementById(key)) {
                 document.getElementById(key).value = tank.settings[key];
@@ -36,7 +36,7 @@
     /**
      * The eventListerner function.
      */
-    tank.panels.classes.config.prototype.eventListener = function(){
+    tank.classes.plugins.config.prototype.eventListener = function(){
         var onclick = function() {
             for (var j = 0; j < document.getElementsByClassName('tank-settings').length; j++) {
                 var name = document.getElementsByClassName('tank-settings')[j].getAttribute('id');

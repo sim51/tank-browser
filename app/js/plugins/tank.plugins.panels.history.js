@@ -5,12 +5,12 @@
         throw 'tank is not declared';
 
     // Create panel package
-    sigma.utils.pkg('tank.panels.classes.history');
+    sigma.utils.pkg('tank.classes.plugins.');
 
     /**
      * The init function.
      */
-    tank.panels.classes.history = function (tank) {
+    tank.classes.plugins.history = function (tank) {
         // the history heap
         this.list = [];
 
@@ -27,7 +27,7 @@
     /**
      * The refresh function.
      */
-    tank.panels.classes.history.prototype.refresh = function () {
+    tank.classes.plugins.history.prototype.refresh = function () {
 
         // Generate the HTML output of the history
         var i = (this.list.length - 1), html = '';
@@ -47,7 +47,7 @@
     /**
      * The eventListerner function.
      */
-    tank.panels.classes.history.prototype.eventListener = function () {
+    tank.classes.plugins.history.prototype.eventListener = function () {
 
         // Click on an history query
         // ===========================
@@ -66,7 +66,7 @@
      * Function that add the current query to the history.
      * It's a 'static' method,  so don't use this.
      */
-    tank.panels.classes.history.prototype.execute = function () {
+    tank.classes.plugins.history.prototype.execute = function () {
 
         // adding the current query to the history
         tank.instance().panels.history.list.push({

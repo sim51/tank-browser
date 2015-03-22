@@ -5,12 +5,12 @@
         throw 'tank is not declared';
 
     // Create panel package
-    sigma.utils.pkg('tank.panels.classes.favorite');
+    sigma.utils.pkg('tank.classes.plugins.favorite');
 
     /**
      * The init function.
      */
-    tank.panels.classes.favorite = function (tank) {
+    tank.classes.plugins.favorite = function (tank) {
         this.list = [];
 
         // init object by calling refresh method
@@ -21,7 +21,7 @@
     /**
      * The refresh function.
      */
-    tank.panels.classes.favorite.prototype.refresh = function () {
+    tank.classes.plugins.favorite.prototype.refresh = function () {
 
         var i = 0, html = '';
         for (i; i < this.list.length; i++) {
@@ -37,7 +37,7 @@
     /**
      * The eventListerner function
      */
-    tank.panels.classes.favorite.prototype.eventListener = function () {
+    tank.classes.plugins.favorite.prototype.eventListener = function () {
 
         // When we click on save
         // =======================

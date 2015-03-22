@@ -5,10 +5,10 @@
         throw 'tank is not declared';
 
     // Create panel package
-    sigma.utils.pkg('tank.components.classes.codemirror');
+    sigma.utils.pkg('tank.classes.plugins.codemirror');
 
-    // init codemirror
-    tank.components.classes.codemirror = function() {
+    // Init codemirror plugin
+    tank.classes.plugins.codemirror = function(tank) {
 
         var editor = CodeMirror.fromTextArea(document.getElementById('cypher-query'), {
             lineNumbers: true,
