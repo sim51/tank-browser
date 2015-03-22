@@ -51,8 +51,8 @@ var jscolor = {
 			if(e[i].href) { base = e[i].href; }
 		}
 
-		var e = document.getElementsByTagName('script');
-		for(var i=0; i<e.length; i+=1) {
+		e = document.getElementsByTagName('script');
+		for(i=0; i<e.length; i+=1) {
 			if(e[i].src && /(^|\/)jscolor\.js([?#].*)?$/i.test(e[i].src)) {
 				var src = new jscolor.URI(e[i].src);
 				var srcAbs = src.toAbsolute(base);
@@ -140,12 +140,13 @@ var jscolor = {
 		if(!el) {
 			return;
 		}
+        var ev;
 		if(document.createEvent) {
-			var ev = document.createEvent('HTMLEvents');
+			ev = document.createEvent('HTMLEvents');
 			ev.initEvent(evnt, true, true);
 			el.dispatchEvent(ev);
 		} else if(document.createEventObject) {
-			var ev = document.createEventObject();
+			ev = document.createEventObject();
 			el.fireEvent('on'+evnt, ev);
 		} else if(el['on'+evnt]) { // alternatively use the traditional event model (IE5)
 			el['on'+evnt]();
@@ -244,9 +245,9 @@ var jscolor = {
 		};
 
 		this.toAbsolute = function(base) {
-			var base = new jscolor.URI(base);
+			base = new jscolor.URI(base);
 			var r = this;
-			var t = new jscolor.URI;
+			var t = new jscolor.URI();
 
 			if(base.scheme === null) { return false; }
 
@@ -395,13 +396,14 @@ var jscolor = {
 				var l = (ts[b]+ps[b])/2;
 
 				// picker pos
-				if (!this.pickerSmartPosition) {
-					var pp = [
+                var pp;
+                if (!this.pickerSmartPosition) {
+					pp = [
 						tp[a],
 						tp[b]+ts[b]-l+l*c
 					];
 				} else {
-					var pp = [
+					pp = [
 						-vp[a]+tp[a]+ps[a] > vs[a] ?
 							(-vp[a]+tp[a]+ts[a]/2 > vs[a]/2 && tp[a]+ts[a]-ps[a] >= 0 ? tp[a]+ts[a]-ps[a] : tp[a]) :
 							tp[a],
@@ -645,16 +647,16 @@ var jscolor = {
 					e.stopPropagation(); // prevent move "view" on broswer
 					e.preventDefault(); // prevent Default - Android Fix (else android generated only 1-2 touchmove events)
 				};
-				p.box.removeEventListener('touchmove', handle_touchmove, false)
-				p.box.addEventListener('touchmove', handle_touchmove, false)
+				p.box.removeEventListener('touchmove', handle_touchmove, false);
+				p.box.addEventListener('touchmove', handle_touchmove, false);
 			}
 			p.padM.onmouseup =
 			p.padM.onmouseout = function() { if(holdPad) { holdPad=false; jscolor.fireEvent(valueElement,'change'); } };
 			p.padM.onmousedown = function(e) {
 				// if the slider is at the bottom, move it up
 				switch(modeID) {
-					case 0: if (THIS.hsv[2] === 0) { THIS.fromHSV(null, null, 1.0); }; break;
-					case 1: if (THIS.hsv[1] === 0) { THIS.fromHSV(null, 1.0, null); }; break;
+					case 0: if (THIS.hsv[2] === 0) { THIS.fromHSV(null, null, 1.0); } break;
+					case 1: if (THIS.hsv[1] === 0) { THIS.fromHSV(null, 1.0, null); } break;
 				}
 				holdSld=false;
 				holdPad=true;
@@ -782,9 +784,10 @@ var jscolor = {
 			p.btnS.style.lineHeight = p.btn.style.height;
 
 			// load images in optimal order
-			switch(modeID) {
-				case 0: var padImg = 'hs.png'; break;
-				case 1: var padImg = 'hv.png'; break;
+            var padImg;
+            switch(modeID) {
+				case 0: padImg = 'hs.png'; break;
+				case 1: padImg = 'hv.png'; break;
 			}
 			p.padM.style.backgroundImage = "url('"+jscolor.getDir()+"cross.gif')";
 			p.padM.style.backgroundRepeat = "no-repeat";
@@ -817,9 +820,10 @@ var jscolor = {
 
 		function redrawPad() {
 			// redraw the pad pointer
-			switch(modeID) {
-				case 0: var yComponent = 1; break;
-				case 1: var yComponent = 2; break;
+            var yComponent;
+            switch(modeID) {
+				case 0: yComponent = 1; break;
+				case 1: yComponent = 2; break;
 			}
 			var x = Math.round((THIS.hsv[0]/6) * (jscolor.images.pad[0]-1));
 			var y = Math.round((1-THIS.hsv[yComponent]) * (jscolor.images.pad[1]-1));
@@ -829,11 +833,11 @@ var jscolor = {
 
 			// redraw the slider image
 			var seg = jscolor.picker.sld.childNodes;
-
-			switch(modeID) {
+            var rgb, i;
+            switch(modeID) {
 				case 0:
-					var rgb = HSV_RGB(THIS.hsv[0], THIS.hsv[1], 1);
-					for(var i=0; i<seg.length; i+=1) {
+					rgb = HSV_RGB(THIS.hsv[0], THIS.hsv[1], 1);
+					for(i=0; i<seg.length; i+=1) {
 						seg[i].style.backgroundColor = 'rgb('+
 							(rgb[0]*(1-i/seg.length)*100)+'%,'+
 							(rgb[1]*(1-i/seg.length)*100)+'%,'+
@@ -841,8 +845,8 @@ var jscolor = {
 					}
 					break;
 				case 1:
-					var rgb, s, c = [ THIS.hsv[2], 0, 0 ];
-					var i = Math.floor(THIS.hsv[0]);
+					rgb, s, c = [ THIS.hsv[2], 0, 0 ];
+					i = Math.floor(THIS.hsv[0]);
 					var f = i%2 ? THIS.hsv[0]-i : 1-(THIS.hsv[0]-i);
 					switch(i) {
 						case 6:
@@ -853,7 +857,7 @@ var jscolor = {
 						case 4: rgb=[1,2,0]; break;
 						case 5: rgb=[0,2,1]; break;
 					}
-					for(var i=0; i<seg.length; i+=1) {
+					for(i=0; i<seg.length; i+=1) {
 						s = 1 - 1/(seg.length-1)*i;
 						c[1] = c[0] * (1 - s*f);
 						c[2] = c[0] * (1 - s);
@@ -869,9 +873,10 @@ var jscolor = {
 
 		function redrawSld() {
 			// redraw the slider pointer
-			switch(modeID) {
-				case 0: var yComponent = 2; break;
-				case 1: var yComponent = 1; break;
+            var yComponent;
+            switch(modeID) {
+				case 0: yComponent = 2; break;
+				case 1: yComponent = 1; break;
 			}
 			var y = Math.round((1-THIS.hsv[yComponent]) * (jscolor.images.sld[1]-1));
 			jscolor.picker.sldM.style.backgroundPosition =
