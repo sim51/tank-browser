@@ -65,111 +65,108 @@
         }
 
         /**
-         * Callback function for sigma & neo4j execute cypher method.
+         * Closure callback function for sigma & neo4j execute cypher method.
          *
          * @param s {Sigma} The sigmajs instance
          * @param g {Graph} The graph object representation
          */
-        this.onGraphDataLoaded = function (s, g) {
+        this.onGraphDataLoaded = function (tankId) {
+            return function (s, g) {
 
-            // FIXME : find the tank instance by the sigma instance ?
-            var t = tank.instance('tank-container');
+                // if graph component is loaded, then we parse the graph to construct some stat
+                //if (tank.instance().panels.graph) {
+                //    tank.instance().panels.graph.refresh();
+                //}
+                var t = tank.instance(tankId);
 
-            // if graph component is loaded, then we parse the graph to construct some stat
-            //if (tank.instance().panels.graph) {
-            //    tank.instance().panels.graph.refresh();
-            //}
+                var i, j, k, node, edge, field, label, type;
+                // Change node label
+                for (i in s.graph.nodes()) {
+                    node = s.graph.nodes()[i];
 
-            var i, j, k, node, edge, field, label, type;
-            // Change node label
-            for (i in s.graph.nodes()) {
-                node = s.graph.nodes()[i];
+                    // changing color
+                    for (j in t.labels) {
+                        label = t.labels[j];
+                        for (k in node.labels) {
+                            if (node.labels[k] === label.name) {
+                                if (node['colors'])
+                                    node['colors'].push(label.color);
+                                else
+                                    node['colors'] = [label.color];
+                            }
+                        }
+                    }
 
-                // changing color
-                for (j in t.labels) {
-                    label = t.labels[j];
-                    for (k in node.labels) {
-                        if (node.labels[k] === label.name) {
-                            if (node['colors'])
-                                node['colors'].push(label.color);
-                            else
-                                node['colors'] = [label.color];
+                    // changing label
+                    for (j in t.settings.field_named) {
+                        field = t.settings.field_named[j];
+                        if (node[field]) {
+                            node.label = node[field];
+                            break;
                         }
                     }
                 }
 
-                // changing label
-                for (j in t.settings.field_named) {
-                    field = t.settings.field_named[j];
-                    if (node[field]) {
-                        node.label = node[field];
-                        break;
+                // Change edge label
+                for (i in s.graph.edges()) {
+                    edge = s.graph.edges()[i];
+
+                    // changing color
+                    for (j in t.types) {
+                        type = t.types[j];
+                        if (edge.type === type.name) {
+                            edge.color = type.color;
+                        }
+                    }
+
+                    // changing label
+                    for (j in t.settings.field_named) {
+                        field = t.settings.field_named[j];
+                        if (edge[field]) {
+                            edge.label = edge[field];
+                            break;
+                        }
                     }
                 }
+
+
+                // starting forceatlas2 algo
+                s.startForceAtlas2({
+                    linLogMode: false,
+                    outboundAttractionDistribution: false,
+                    adjustSizes: true,
+                    edgeWeightInfluence: 0,
+                    scalingRatio: 1,
+                    strongGravityMode: false,
+                    gravity: 1,
+                    slowDown: 1,
+                    barnesHutOptimize: false,
+                    barnesHutTheta: 0.5,
+                    startingIterations: 1,
+                    iterationsPerRender: 1
+                });
+
+                // setting the timeout
+                window.setTimeout(function () {
+                   s.stopForceAtlas2();
+                }, t.settings.forceAtlas2Time, s);
+
+                // drag node
+                // Initialize the dragNodes plugin:
+                //var dragListener = s.plugins.dragNodes(s, s.renderers[0]);
+                //dragListener.bind('startdrag', function (event) {
+                //    console.log(event);
+                //});
+                //dragListener.bind('drag', function (event) {
+                //    console.log(event);
+                //});
+                //dragListener.bind('drop', function (event) {
+                //    console.log(event);
+                //});
+                //dragListener.bind('dragend', function (event) {
+                //    console.log(event);
+                //});
             }
-
-            // Change edge label
-            for (i in s.graph.edges()) {
-                edge = s.graph.edges()[i];
-
-                // changing color
-                for (j in t.types) {
-                    type = t.types[j];
-                    if (edge.type === type.name) {
-                        edge.color = type.color;
-                    }
-                }
-
-                // changing label
-                for (j in t.settings.field_named) {
-                    field = t.settings.field_named[j];
-                    if (edge[field]) {
-                        edge.label = edge[field];
-                        break;
-                    }
-                }
-            }
-
-
-            // Modify graph datas
-            //this.overrideGraphData(s);
-
-            // starting forceatlas2 algo
-            s.startForceAtlas2({
-                linLogMode: false,
-                outboundAttractionDistribution: false,
-                adjustSizes: true,
-                edgeWeightInfluence: 0,
-                scalingRatio: 1,
-                strongGravityMode: false,
-                gravity: 1,
-                slowDown: 1,
-                barnesHutOptimize: false,
-                barnesHutTheta: 0.5,
-                startingIterations: 1,
-                iterationsPerRender: 1
-            });
-
-            // setting the timeout
-            window.setTimeout(function () {
-                t.sigmajs.stopForceAtlas2();
-            }, t.settings.forceAtlas2Time, s);
-
-            // drag node
-            // Initialize the dragNodes plugin:
-            var dragListener = sigma.plugins.dragNodes(t.sigmajs, t.sigmajs.renderers[0]);
-            dragListener.bind('startdrag', function (event) {
-                console.log(event);
-            });
-            dragListener.bind('drag', function (event) {
-                console.log(event);
-            });
-            dragListener.bind('drop', function (event) {
-                console.log(event);
-            });
-            dragListener.bind('dragend', function (event) {
-                console.log(event);
-            });
 
         };
 
@@ -182,6 +179,7 @@
      * Refresh the tank instance.
      */
     tank.prototype.refresh = function () {
+        this.sigmajs.killForceAtlas2();
         this.sigmajs.graph.clear();
         this.sigmajs.refresh();
 
@@ -190,7 +188,7 @@
                 this.settings.server,
                 this.query.query,
                 this.sigmajs,
-                this.onGraphDataLoaded
+                this.onGraphDataLoaded(this.id)
             );
         }
     };

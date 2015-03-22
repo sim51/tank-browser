@@ -31,7 +31,7 @@
          */
         this.updateQuery = function () {
             console.log("[tank.plugins.query] => updateQuery");
-            _t.query = document.getElementById(this.id + "-value").innerText;
+            _t.query.query = document.getElementById(this.id + "-value").innerText;
         }
 
         /**

@@ -10,7 +10,11 @@
     // Init codemirror plugin
     tank.classes.plugins.codemirror = function(tank) {
 
-        var editor = CodeMirror.fromTextArea(document.getElementById('cypher-query'), {
+        var editor,
+            _t = tank,
+            self = this;
+
+        editor = CodeMirror.fromTextArea(document.getElementById(tank.id + "-query-value"), {
             lineNumbers: true,
             indentWithTabs: true,
             smartIndent: true,
@@ -18,22 +22,34 @@
             theme: "neo"
         });
 
+        /**
+         * Function that update the tank query with the textarea.
+         */
+        this.updateQuery = function (cm, obj) {
+            console.log("[tank.plugins.codemirror] => updateQuery : " + cm.getValue());
+            _t.query.query = cm.getValue();
+        }
+
+        /**
+         * Function that the query (ie. tank.refresh()).
+         */
+        this.runQuery = function () {
+            console.log("[tank.plugins.codemirror] => runQuery");
+            _t.refresh();
+        }
+
+        // ON change event
+        editor.on('change', this.updateQuery);
+
+
         // Adding some key map that permit to run & save the query.
         editor.addKeyMap(
             {
-                "Ctrl-Enter": function () {
-                    tank.instance().executeQuery();
-                },
-                "Alt-Enter": function () {
-                    tank.instance().executeQuery();
-                }
+                "Ctrl-Enter": this.runQuery,
+                "Alt-Enter": this.runQuery
             },
             false
         );
-        editor.on('change', function(cm, obj){
-            tank.instance().query = cm.getValue();
-        });
-        return editor;
     };
 
 }).call(this);
