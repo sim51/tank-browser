@@ -19,12 +19,12 @@
             query: 'MATCH (n) OPTIONAL MATCH (n)-[r]->(m) RETURN n,r,m LIMIT 100'
         },
         // Custome labels & types array
-        labels: [], // must contain object like {  name: 'my label' , color : '#FFFFFF' }
-        types: [], // must contain object like {  name: 'my type' , color : '#FFFFFF' }
+        labels: [{  name: 'my label' , color : '#FFFFFF' }], // must contain object like {  name: 'my label' , color : '#FFFFFF' }
+        types: [{  name: 'my label' , color : '#FFFFFF' }], // must contain object like {  name: 'my type' , color : '#FFFFFF' }
 
         // Plugin list
         // ===========================
-        plugins: ['config', 'favorite', 'graph', 'history', 'codemirror' ],
+        plugins: ['query' ], //, 'config', 'favorite', 'graph', 'history', 'codemirror'
 
         // General config
         // ===========================

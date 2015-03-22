@@ -20,6 +20,11 @@ application = {
     js: {
         src: ['./app/js/**/*.js'],
         dest: "./build/js/"
+    },
+    template: {
+        src: ['./app/js/plugins/**/*.html'],
+        dest: "./build/js/",
+        name: "templates.js"
     }
 };
 
@@ -67,6 +72,16 @@ gulp.task('js', function () {
         .pipe(gulp.dest(application.js.dest));
 });
 
+gulp.task('template', function() {
+    var templateName = function (file) {
+        var name = file.path.split("/")[file.path.split("/").length - 1]
+        return name.replace(".html", "");
+    }
+    gulp.src(application.template.src)
+        .pipe(compiler(application.template.name,  { wrapper:false , templateName: templateName }))
+        .pipe(gulp.dest(application.template.dest));
+});
+
 /**
  * Clean task
  */
@@ -80,6 +95,7 @@ gulp.task('clean', function () {
  */
 gulp.task('watch', function () {
 
+    // JS watch
     gulp.src(application.js.src, { read: false})
         .pipe(watch({ emit: 'all' }, function (files) {
             gulp.run("js");
@@ -89,12 +105,21 @@ gulp.task('watch', function () {
                 .pipe(connect.reload());
         }));
 
+    // Less watch
     gulp.src(application.less.src, { read: false})
         .pipe(watch({ emit: 'all' }, function (files) {
             gulp.run("less");
             files.pipe(connect.reload());
         }));
 
+    // Template watch
+    gulp.src(application.template.src, { read: false})
+        .pipe(watch({ emit: 'all' }, function (files) {
+            gulp.run("template");
+            files.pipe(connect.reload());
+        }));
+
+    // Html watch
     gulp.src("./app/**/*.html", { read: false})
         .pipe(watch({ emit: 'all' }, function (files) {
             files.pipe(connect.reload());

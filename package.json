@@ -26,8 +26,10 @@
         "bootstrap": "^3.3.2",
         "codemirror": "^5.0.0",
         "font-awesome" : "^4.3.0",
-        "sigma": "1.0.3",
-        "file-dependencies": "1.2.1"
+        "sigma": "^1.0.3",
+        "hogan": "^1.0.2",
+        "require.js": "^0.3.97",
+        "file-dependencies": "^1.2.1"
     },
     "fileDependencies": {
         "sigma-neo4j": "https://raw.githubusercontent.com/sim51/sigma.js/master/plugins/sigma.parsers.cypher/sigma.parsers.cypher.js"
