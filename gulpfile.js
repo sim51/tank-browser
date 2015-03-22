@@ -10,7 +10,9 @@ var gulp = require('gulp'),
     clean = require('gulp-clean'),
     connect = require('gulp-connect'),
     sourcemaps = require('gulp-sourcemaps'),
-    compiler = require('gulp-hogan-compile');
+    handlebars = require('gulp-handlebars'),
+    wrap = require('gulp-wrap'),
+    declare = require('gulp-declare');
 
 application = {
     less: {
@@ -72,13 +74,19 @@ gulp.task('js', function () {
         .pipe(gulp.dest(application.js.dest));
 });
 
-gulp.task('template', function() {
+gulp.task('template', function () {
     var templateName = function (file) {
         var name = file.path.split("/")[file.path.split("/").length - 1]
         return name.replace(".html", "");
     }
     gulp.src(application.template.src)
-        .pipe(compiler(application.template.name,  { wrapper:false , templateName: templateName }))
+        .pipe(handlebars())
+        .pipe(wrap('Handlebars.template(<%= contents %>)'))
+        .pipe(declare({
+            namespace: 'templates',
+            noRedeclare: true, // Avoid duplicate declarations
+        }))
+        .pipe(concat(application.template.name))
         .pipe(gulp.dest(application.template.dest));
 });
 
@@ -86,7 +94,7 @@ gulp.task('template', function() {
  * Clean task
  */
 gulp.task('clean', function () {
-    gulp.src('app/build', {read: false}).pipe(clean());
+    gulp.src('./build', {read: false}).pipe(clean());
 });
 
 

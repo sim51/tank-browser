@@ -17,7 +17,9 @@
         "gulp-watch": "^0.5.4",
         "connect": "^2.14.4",
         "gulp-sourcemaps": "^1.5.1",
-        "gulp-hogan-compile": "^0.4.1"
+        "gulp-handlebars ": "^4.0.0",
+        "gulp-declare": "^0.3.0",
+        "gulp-wrap": "^0.11.0"
     },
     "dependencies": {
         "linkurious" : "https://github.com/Linkurious/linkurious.js/archive/v1.0.6.tar.gz",
@@ -27,8 +29,7 @@
         "codemirror": "^5.0.0",
         "font-awesome" : "^4.3.0",
         "sigma": "^1.0.3",
-        "hogan": "^1.0.2",
-        "require.js": "^0.3.97",
+        "handlebars": "^3.0.0",
         "file-dependencies": "^1.2.1"
     },
     "fileDependencies": {

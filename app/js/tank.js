@@ -89,10 +89,10 @@
                         label = t.labels[j];
                         for (k in node.labels) {
                             if (node.labels[k] === label.name) {
-                                if (node['colors'])
-                                    node['colors'].push(label.color);
+                                if (node.colors)
+                                    node.colors.push(label.color);
                                 else
-                                    node['colors'] = [label.color];
+                                    node.colors = [label.color];
                             }
                         }
                     }
@@ -166,7 +166,7 @@
                 //dragListener.bind('dragend', function (event) {
                 //    console.log(event);
                 //});
-            }
+            };
 
         };
 

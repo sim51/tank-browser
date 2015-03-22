@@ -27,8 +27,11 @@
          */
         this.updateQuery = function (cm, obj) {
             console.log("[tank.plugins.codemirror] => updateQuery : " + cm.getValue());
-            _t.query.query = cm.getValue();
-        }
+            _t.query = {
+                query : cm.getValue(),
+                title : cm.getWrapperElement().getElementsByClassName('CodeMirror-code')[0].innerHTML
+            };
+        };
 
         /**
          * Function that the query (ie. tank.refresh()).
@@ -36,7 +39,7 @@
         this.runQuery = function () {
             console.log("[tank.plugins.codemirror] => runQuery");
             _t.refresh();
-        }
+        };
 
         // ON change event
         editor.on('change', this.updateQuery);
