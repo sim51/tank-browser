@@ -24,7 +24,7 @@
 
         // Plugin list
         // ===========================
-        plugins: ['query', 'codemirror', 'favorite' ], //, 'config',  'graph', 'history', 'codemirror'
+        plugins: ['query', 'codemirror', 'favorite', 'history'], //, 'config',  'stats'
 
         // General config
         // ===========================

@@ -10,17 +10,10 @@
     // Init codemirror plugin
     tank.classes.plugins.codemirror = function(tank) {
 
-        var editor,
-            _t = tank,
-            self = this;
+        var _t = tank,
+            _self = this;
 
-        editor = CodeMirror.fromTextArea(document.getElementById(tank.id + "-query-value"), {
-            lineNumbers: true,
-            indentWithTabs: true,
-            smartIndent: true,
-            mode: "cypher",
-            theme: "neo"
-        });
+        this.editor;
 
         /**
          * Function that update the tank query with the textarea.
@@ -41,18 +34,42 @@
             _t.refresh();
         };
 
-        // ON change event
-        editor.on('change', this.updateQuery);
+        /**
+         * Function that update cm with the tank query value
+         */
+        this.render = function () {
+            // Init codemirror
+            _self.editor = CodeMirror.fromTextArea(document.getElementById(tank.id + "-query-value"), {
+                lineNumbers: true,
+                indentWithTabs: true,
+                smartIndent: true,
+                mode: "cypher",
+                theme: "neo"
+            });
 
+            // Event listener / bind key
+            // ================================
+            // ON change event
+            _self.editor.on('change', this.updateQuery);
+            // Adding some key map that permit to run & save the query.
+            _self.editor.addKeyMap(
+                {
+                    "Ctrl-Enter": this.runQuery,
+                    "Alt-Enter": this.runQuery
+                },
+                false
+            );
 
-        // Adding some key map that permit to run & save the query.
-        editor.addKeyMap(
-            {
-                "Ctrl-Enter": this.runQuery,
-                "Alt-Enter": this.runQuery
-            },
-            false
-        );
+            _self.editor.setValue(_t.query.query);
+        };
+
+    };
+
+    /**
+     * The refresh function.
+     */
+    tank.classes.plugins.codemirror.prototype.refresh = function () {
+        this.render();
     };
 
 }).call(this);

@@ -59,7 +59,7 @@
 
         // Initiate plugins
         // =========================
-        for (i in this.settings.plugins) {
+        for (i = 0; i< this.settings.plugins.length; i++) {
             name = this.settings.plugins[i];
             this.plugins[name] = new tank.classes.plugins[name](_self);
         }
@@ -179,9 +179,15 @@
      * Refresh the tank instance.
      */
     tank.prototype.refresh = function () {
+        // Refresh sigma
         this.sigmajs.killForceAtlas2();
         this.sigmajs.graph.clear();
         this.sigmajs.refresh();
+
+        // Refresh all plugin
+        for (var i in this.plugins ) {
+            this.plugins[i].refresh();
+        }
 
         if (this.query && this.query.query) {
             sigma.neo4j.cypher(

@@ -1,6 +1,10 @@
-<a class="tabsheet-link" href="#"><i class="fa fa-history fa-2x"></i></a>
-<div class="tabsheet">
-    <ul id="history-list" class="list-unstyled cm-s-neo">
+<ul id="{{id}}-list" class="list-unstyled cm-s-neo">
+    {{#tank.history}}
+    <li>
+        <a href="#" class="{{../id}}-link" data-id="{{@index}}">
+            {{{title}}}
+        </a>
+    </li>
+    {{/tank.history}}
+</ul>
 
-    </ul>
-</div>

@@ -5,77 +5,75 @@
         throw 'tank is not declared';
 
     // Create panel package
-    sigma.utils.pkg('tank.classes.plugins.');
+    sigma.utils.pkg('tank.classes.plugins.history');
+
+    // init the history list on tank prortype;
+    tank.prototype.history = [];
 
     /**
      * The init function.
      */
     tank.classes.plugins.history = function (tank) {
-        // the history heap
-        this.list = [];
 
-        // init object by calling refresh method
-        var _self = this;
-        _self.refresh();
+        // Init variables:
+        var _self = this,
+            _t = tank;
 
-        // When a query is executed, we save it into history
-        window.addEventListener( 'run-query', _self.execute, false );
+        this.id = _t.id + "-history";
 
+        // Create the dom query container if it not exist
+        if(!document.getElementById(this.id)) {
+            var domContainer = document.createElement("div");
+            domContainer.setAttribute("id", this.id);
+            document.getElementById(_t.id).appendChild(domContainer);
+        }
 
+        /**
+         * Event : run the history query
+         */
+        this.eventRunHistory = function () {
+            console.log("[tank.plugins.history] => eventRunHistory");
+            var itemId = this.getAttribute("data-id");
+            _t.query = _t.history[itemId];
+            _t.refresh();
+        };
+
+        /**
+         * Function that save the current query into history.
+         */
+        this.saveIntoHistory = function () {
+            console.log("[tank.plugins.history] => saveIntoHistory");
+            _t.history.push(_t.query);
+        };
+
+        /**
+         * Function that generate the render of this module.
+         */
+        this.render = function () {
+
+            // templating
+            // =======================
+            var template = templates.tank.plugins.history.panel({ id: this.id, tank: _t});
+            document.getElementById(this.id).innerHTML = template;
+
+            // Adding the listeners
+            // =======================
+            // On link to run query
+            for (var j = 0; j < document.getElementsByClassName(this.id + "-link").length; j++) {
+                document.getElementsByClassName(this.id + "-link")[j].addEventListener("click", this.eventRunHistory, false);
+            }
+        };
+
+        _self.render();
     };
+
 
     /**
      * The refresh function.
      */
     tank.classes.plugins.history.prototype.refresh = function () {
-
-        // Generate the HTML output of the history
-        var i = (this.list.length - 1), html = '';
-        for (i; i >= 0; i--) {
-            html += "<li>" +
-                "<span class=\"timeago\">" + tank.utils.timeago(this.list[i].time) + "</span>" +
-                "<a href=\"#\" class=\"history-query\" data-query-id=\"" + i + "\">" + this.list[i].display + "</a>" +
-                "</li>";
-        }
-        // Replace the current HTML
-        document.getElementById('history-list').innerHTML = html;
-
-        // Refresh listener
-        this.eventListener();
+        this.saveIntoHistory();
+        this.render();
     };
-
-    /**
-     * The eventListerner function.
-     */
-    tank.classes.plugins.history.prototype.eventListener = function () {
-
-        // Click on an history query
-        // ===========================
-        var onclick = function () {
-            var id = this.getAttribute("data-query-id");
-            tank.instance().components.codemirror.setValue(tank.panels.history.list[id].query);
-            tank.instance().executeQuery();
-        };
-        for (var j = 0; j < document.getElementsByClassName('history-query').length; j++) {
-            document.getElementsByClassName('history-query')[j].onclick = onclick;
-        }
-
-    };
-
-    /**
-     * Function that add the current query to the history.
-     * It's a 'static' method,  so don't use this.
-     */
-    tank.classes.plugins.history.prototype.execute = function () {
-
-        // adding the current query to the history
-        tank.instance().panels.history.list.push({
-            query: tank.instance().components.codemirror.getValue(),
-            time: new Date(),
-            display: tank.instance().components.codemirror.getWrapperElement().getElementsByClassName('CodeMirror-code')[0].innerHTML
-        });
-        tank.instance().panels.history.refresh();
-    };
-
 
 }).call(this);

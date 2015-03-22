@@ -19,7 +19,7 @@
         var _self = this,
             _t = tank;
 
-        this.id = _t.id + "-history";
+        this.id = _t.id + "-favorite";
 
         // Create the dom query container if it not exist
         if(!document.getElementById(this.id)) {
