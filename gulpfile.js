@@ -9,7 +9,8 @@ var gulp = require('gulp'),
     less = require('gulp-less'),
     clean = require('gulp-clean'),
     connect = require('gulp-connect'),
-    sourcemaps = require('gulp-sourcemaps');
+    sourcemaps = require('gulp-sourcemaps'),
+    compiler = require('gulp-hogan-compile');
 
 application = {
     less: {
