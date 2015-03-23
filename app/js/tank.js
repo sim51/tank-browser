@@ -50,9 +50,11 @@
 
         // Sigmajs
         // =========================
-        // first we create a dom element with the good id
+        // first we create (if needed) a dom element with the good id
         var sigmaDomId = this.id + '-graph';
-        document.getElementById(this.id).innerHTML = '<div id="' + sigmaDomId + '"></div>';
+        if(!document.getElementById(sigmaDomId)) {
+            document.getElementById(this.id).innerHTML = '<div id="' + sigmaDomId + '"></div>';
+        }
         // init sigma
         this.sigmajs = new sigma({ container: sigmaDomId, type: 'canvas'});
 

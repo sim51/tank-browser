@@ -50,6 +50,7 @@
             </button>
             <a class="brand" href="/" title="Benoît Simard">
                 <img class="baseline" src="images/bsimard.png" alt="Benoît Simard">
+
                 <h1>Cypher Browser</h1>
             </a>
         </div>
@@ -62,8 +63,36 @@
 
 
 <main class="bs-docs-masthead" id="content" role="main">
-    <div class="container-fluid">
-        <div id="tank-container"></div>
+    <div id="tank-container" class="container-fluid">
+        <div class="container-fluid">
+            <div class="col-md-3">
+                <ul id="menu" class="list-unstyled">
+                    <li>
+                        <a href="#" class="menu-link" ><i class="fa fa-pie-chart fa-2x"></i></a>
+                        <div id="tank-container-stats"></div>
+                    </li>
+                    <li>
+                        <a href="#" class="menu-link" ><i class="fa fa-star fa-2x"></i></a>
+                        <div id="tank-container-favorite"></div>
+                    </li>
+                    <li>
+                        <a href="#" class="menu-link" "><i class="fa fa-history fa-2x"></i></a>
+                        <div id="tank-container-history"></div>
+                    </li>
+                    <li class="active">
+                        <a href="#" class="menu-link" ><i class="fa fa-cogs fa-2x"></i></a>
+                        <div id="tank-container-config"></div>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-9" id="tank-container-graph">
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div id="tank-container-query" class="col-md-12">
+
+            </div>
+        </div>
     </div>
 </main>
 
@@ -85,6 +114,20 @@
      * When document is ready , we initialize the application.
      */
     var tank = new tank();
+
+    // Panel navigation
+    // ========================
+    // FIXME : be more generic
+    var onClick = function () {
+        document.getElementById('tank-container-stats').parentNode.classList.remove('active');
+        document.getElementById('tank-container-favorite').parentNode.classList.remove('active');
+        document.getElementById('tank-container-history').parentNode.classList.remove('active');
+        document.getElementById('tank-container-config').parentNode.classList.remove('active');
+        this.parentNode.classList.add('active');
+    };
+    for (i = 0; i < document.getElementsByClassName('menu-link').length; i++) {
+        document.getElementsByClassName('menu-link')[i].onclick = onClick;
+    }
 </script>
 
 <!-- START LINKURIOUS IMPORTS -->

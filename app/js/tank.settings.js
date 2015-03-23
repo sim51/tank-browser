@@ -11,20 +11,20 @@
 
         // id of the dom element
         id: 'tank-container',
-        // Do we have to execute the query on load ?
-        onload_runquery: false,
+
         // default query
         query: {
             title: 'Get some data',
             query: 'MATCH (n) OPTIONAL MATCH (n)-[r]->(m) RETURN n,r,m LIMIT 100'
         },
+
         // Custome labels & types array
         labels: [{  name: 'my label' , color : '#FFFFFF' }], // must contain object like {  name: 'my label' , color : '#FFFFFF' }
         types: [{  name: 'my label' , color : '#FFFFFF' }], // must contain object like {  name: 'my type' , color : '#FFFFFF' }
 
         // Plugin list
         // ===========================
-        plugins: ['query', 'codemirror', 'favorite', 'history', 'config'], //  stats
+        plugins: ['query', 'codemirror', 'favorite', 'history', 'config' , 'stats'],
 
         // General config
         // ===========================

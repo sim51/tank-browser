@@ -18,7 +18,7 @@
         var _self = this,
             _t = tank;
 
-        this.id = _t.id + "-query";
+        this.id = _t.id + "-config";
 
         // Create the dom query container if it not exist
         if(!document.getElementById(this.id)) {
