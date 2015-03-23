@@ -13,8 +13,6 @@
         var _t = tank,
             _self = this;
 
-        this.editor;
-
         /**
          * Function that update the tank query with the textarea.
          */

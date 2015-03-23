@@ -1,7 +1,5 @@
-<a class="tabsheet-link" href="#"><i class="fa fa-cogs fa-2x"></i></a>
-<div class="tabsheet">
-    <label for="server">Server URL</label>
-    <input id="server" type="text" class="tank-settings form-control" placeholder="http://localhost:7474" value="http://localhost:7474">
-    <label for="forceAtlas2Time">Force Atlas time</label>
-    <input id="forceAtlas2Time" type="range" class="tank-settings form-control" min="1000" max="60000" step="1000" value="5000">
-</div>
+<label for="server">Server URL</label>
+<input id="server" type="text" class="{{id}}-field form-control" placeholder="http://localhost:7474" value="{{tank.settings.server}}">
+
+<label for="forceAtlas2Time">Force Atlas time</label>
+<input id="forceAtlas2Time" type="range" class="{{id}}-field form-control" min="1000" max="60000" step="1000" value="{{tank.settings.forceAtlas2Time}}">
