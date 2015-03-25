@@ -20,9 +20,6 @@
         this.jscolor = jscolor;
         jscolor.dir = './lib/jscolor/';
 
-        // init object by calling refresh method
-        var _self = this;
-
         // Create the dom query container if it not exist
         if(!document.getElementById(this.id)) {
             var domQueryContainer = document.createElement("div");
@@ -37,6 +34,9 @@
             console.log("[tank.plugins.stats] => color type");
             var id = this.getAttribute("data-id");
             _t.types[id].color = '#' + this.value;
+
+            // Calling the refresh method
+            _self.refresh();
         };
 
         /**
@@ -46,6 +46,9 @@
             console.log("[tank.plugins.stats] => color label");
             var id = this.getAttribute("data-id");
             _t.labels[id].color = '#' + this.value;
+
+            // Calling the refresh method
+            _self.refresh();
         };
 
         /**

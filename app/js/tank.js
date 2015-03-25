@@ -56,7 +56,12 @@
             document.getElementById(this.id).innerHTML = '<div id="' + sigmaDomId + '"></div>';
         }
         // init sigma
-        this.sigmajs = new sigma({renderer: { container: sigmaDomId, type: 'canvas'}});
+        this.sigmajs = new sigma({
+            renderer: {
+                container: document.getElementById(sigmaDomId),
+                type: 'canvas'
+            }
+        });
 
 
         // Initiate plugins
