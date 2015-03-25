@@ -1,19 +1,29 @@
 <fieldset>
     <legend>Statistiques</legend>
     <ul>
-        <li><span id="numberOfNode">{{tank.sigma.graph.nodes.length}}</span> nodes</li>
-        <li><span id="numberOfEdge">{{tank.sigma.graph.edges.length}}</span> eges</li>
+        <li><span id="numberOfNode">{{node_count}}</span> nodes</li>
+        <li><span id="numberOfEdge">{{edge_count}}</span> eges</li>
     </ul>
 </fieldset>
 <fieldset>
     <legend>Labels</legend>
     <ul id="labels">
-
+        {{#tank.labels}}
+            <li>
+                {{name}} ({{count}})
+                <input class="color labels pull-right" data-id="{{@index}}" value="{{color}}" />
+            </li>
+        {{/tank.labels}}
     </ul>
 </fieldset>
 <fieldset>
     <legend>Types</legend>
     <ul id="types">
-
+        {{#tank.types}}
+            <li>
+                {{name}} ({{count}})
+                <input class="color types pull-right" data-id="{{@index}}" value="{{color}}" />
+            </li>
+        {{/tank.types}}
     </ul>
 </fieldset>

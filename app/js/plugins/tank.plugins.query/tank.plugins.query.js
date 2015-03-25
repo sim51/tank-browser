@@ -62,7 +62,7 @@
         };
 
         // Calling the refresh method
-        _self.refresh(_t);
+        _self.refresh();
     };
 
 

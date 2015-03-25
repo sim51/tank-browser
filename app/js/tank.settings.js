@@ -20,7 +20,7 @@
 
         // Custome labels & types array
         labels: [{  name: 'my label' , color : '#FFFFFF' }], // must contain object like {  name: 'my label' , color : '#FFFFFF' }
-        types: [{  name: 'my label' , color : '#FFFFFF' }], // must contain object like {  name: 'my type' , color : '#FFFFFF' }
+        types: [{  name: 'my type' , color : '#FFFFFF' }], // must contain object like {  name: 'my type' , color : '#FFFFFF' }
 
         // Plugin list
         // ===========================

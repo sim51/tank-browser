@@ -56,7 +56,7 @@
             document.getElementById(this.id).innerHTML = '<div id="' + sigmaDomId + '"></div>';
         }
         // init sigma
-        this.sigmajs = new sigma({ container: sigmaDomId, type: 'canvas'});
+        this.sigmajs = new sigma({renderer: { container: sigmaDomId, type: 'canvas'}});
 
 
         // Initiate plugins
@@ -75,11 +75,12 @@
         this.onGraphDataLoaded = function (tankId) {
             return function (s, g) {
 
-                // if graph component is loaded, then we parse the graph to construct some stat
-                //if (tank.instance().panels.graph) {
-                //    tank.instance().panels.graph.refresh();
-                //}
                 var t = tank.instance(tankId);
+
+                // Refresh all plugin wit current data
+                for (var i in t.plugins ) {
+                    t.plugins[i].refresh();
+                }
 
                 var i, j, k, node, edge, field, label, type;
                 // Change node label
@@ -91,6 +92,7 @@
                         label = t.labels[j];
                         for (k in node.labels) {
                             if (node.labels[k] === label.name) {
+                                delete node.color;
                                 if (node.colors)
                                     node.colors.push(label.color);
                                 else
@@ -148,6 +150,8 @@
                     iterationsPerRender: 1
                 });
 
+                s.refresh();
+
                 // setting the timeout
                 window.setTimeout(function () {
                    s.stopForceAtlas2();
@@ -155,19 +159,19 @@
 
                 // drag node
                 // Initialize the dragNodes plugin:
-                //var dragListener = s.plugins.dragNodes(s, s.renderers[0]);
-                //dragListener.bind('startdrag', function (event) {
-                //    console.log(event);
-                //});
-                //dragListener.bind('drag', function (event) {
-                //    console.log(event);
-                //});
-                //dragListener.bind('drop', function (event) {
-                //    console.log(event);
-                //});
-                //dragListener.bind('dragend', function (event) {
-                //    console.log(event);
-                //});
+                var dragListener = sigma.plugins.dragNodes(s, s.renderers[0]);
+                dragListener.bind('startdrag', function (event) {
+                    console.log(event);
+                });
+                dragListener.bind('drag', function (event) {
+                    console.log(event);
+                });
+                dragListener.bind('drop', function (event) {
+                    console.log(event);
+                });
+                dragListener.bind('dragend', function (event) {
+                    console.log(event);
+                });
             };
 
         };
@@ -186,11 +190,6 @@
         this.sigmajs.graph.clear();
         this.sigmajs.refresh();
 
-        // Refresh all plugin
-        for (var i in this.plugins ) {
-            this.plugins[i].refresh();
-        }
-
         if (this.query && this.query.query) {
             sigma.neo4j.cypher(
                 this.settings.server,
@@ -200,6 +199,24 @@
             );
         }
     };
+
+    /**
+     * Retunn the Type that match the name
+     *
+     * @param {string}  name    Name of the type to search
+     */
+    tank.prototype.findTypeByName = function( name ) {
+        return _.findWhere(this.types, {name: name})
+    }
+
+    /**
+     * Return the Lael that match the name
+     *
+     * @param {string}  name    Name of the type to search
+     */
+    tank.prototype.findLabelByName = function( name ) {
+        return _.findWhere(this.labels, {name: name})
+    }
 
 
     /**

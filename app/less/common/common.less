@@ -96,7 +96,7 @@ main#content {
       box-shadow: -5px 0px 10px @quaternary;
       background-color: @quaternary;
 
-      li {
+      & > li {
         display: inline-block;
         height: @layout-panel-nav-height;
         margin-top: 5px;
@@ -127,7 +127,7 @@ main#content {
         }
 
       }
-      li:last-child {
+      & > li:last-child {
         float:right;
       }
     }

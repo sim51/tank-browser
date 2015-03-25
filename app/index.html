@@ -11,14 +11,13 @@
 
 
     <script src="./lib/jscolor/jscolor.js"></script>
+    <script src="../node_modules/underscore/underscore-min.js"></script>
     <script src="../node_modules/handlebars/dist/handlebars.min.js"></script>
 
     <!-- START SIGMA IMPORTS -->
     <script src="../node_modules/sigma/build/sigma.min.js"></script>
-
     <script src="../node_modules/sigma/plugins/sigma.layout.forceAtlas2/worker.js"></script>
     <script src="../node_modules/sigma/plugins/sigma.layout.forceAtlas2/supervisor.js"></script>
-
     <script src="../node_modules/sigma/build/plugins/sigma.parsers.json.min.js"></script>
     <script src="../node_modules/sigma/build/plugins/sigma.plugins.animate.min.js"></script>
     <script src="../node_modules/sigma/build/plugins/sigma.plugins.dragNodes.min.js"></script>
@@ -28,6 +27,11 @@
     <script src="../node_modules/sigma/build/plugins/sigma.statistics.HITS.min.js"></script>
     <script src="../node_modules/file_dependencies/sigma-neo4j"></script>
     <!-- END SIGMA IMPORTS -->
+
+    <!-- START LINKURIOUS IMPORTS -->
+    <script src="../node_modules/linkurious/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.nodes.def.js"></script>
+    <script src="../node_modules/linkurious/plugins/sigma.plugins.dragNodes/sigma.plugins.dragNodes.js"></script>
+    <!-- END LINKURIOUS IMPORTS -->
 
     <!-- Code mirror-->
     <link href="../node_modules/codemirror/lib/codemirror.css" rel="stylesheet">
@@ -113,7 +117,7 @@
     /**
      * When document is ready , we initialize the application.
      */
-    var tank = new tank();
+    var myTank = new tank();
 
     // Panel navigation
     // ========================
@@ -130,9 +134,6 @@
     }
 </script>
 
-<!-- START LINKURIOUS IMPORTS -->
-<script src="../node_modules/linkurious/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.nodes.def.js"></script>
-<!-- END LINKURIOUS IMPORTS -->
 </body>
 </html>
 

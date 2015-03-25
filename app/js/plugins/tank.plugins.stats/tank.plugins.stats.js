@@ -10,135 +10,124 @@
     /**
      * The init function.
      */
-    tank.classes.plugins.stats = function (tank) {
-        this.labels = [];
-        this.types = [];
+    tank.classes.plugins.stats = function (t) {
+        // Init variables:
+        var _self = this,
+            _t = t;
+
+        this.id = _t.id + "-stats";
+
         this.jscolor = jscolor;
-        jscolor.dir = './js/lib/jscolor/';
+        jscolor.dir = './lib/jscolor/';
 
         // init object by calling refresh method
         var _self = this;
 
-        // When a query is executed, we save it into history
-        window.addEventListener('graph-data-loaded', _self.refresh, false);
+        // Create the dom query container if it not exist
+        if(!document.getElementById(this.id)) {
+            var domQueryContainer = document.createElement("div");
+            domQueryContainer.setAttribute("id", this.id);
+            document.getElementById(_t.id).appendChild(domQueryContainer);
+        }
+
+        /**
+         * Event : change color for type.
+         */
+        this.eventOnChangeColorType = function () {
+            console.log("[tank.plugins.stats] => color type");
+            var id = this.getAttribute("data-id");
+            _t.types[id].color = '#' + this.value;
+        };
+
+        /**
+         * Event : change color for label.
+         */
+        this.eventOnChangeColorLabel = function () {
+            console.log("[tank.plugins.stats] => color label");
+            var id = this.getAttribute("data-id");
+            _t.labels[id].color = '#' + this.value;
+        };
+
+        /**
+         * Function that generate the render of this module.
+         */
+        this.render = function () {
+            var i, j, nodes, node, edges, edge, label;
+
+            // templating
+            // =======================
+            var template;
+            if(_t.sigmajs.graph) {
+
+                //FIXME: redo with underscore
+
+                // Refresh label & type on tank instance from sigmajs graph
+                // =======================
+                // update types
+                edges = _t.sigmajs.graph.edges();
+                for (i in edges) {
+                    edge = edges[i];
+                    if (!_t.findTypeByName(edge.type)) {
+                        // adding the current type to the list
+                        _t.types.push({
+                            name: edge.type,
+                            color: tank.utils.randomcolor(),
+                            count : 1
+                        });
+                    }
+                    else {
+                        _t.findTypeByName(edge.type).count += 1;
+                    }
+                }
+                // update labels
+                nodes = _t.sigmajs.graph.nodes();
+                for (i in nodes) {
+                    node = nodes[i];
+                    for (j in node.labels) {
+                        label = node.labels[j];
+                        if (!_t.findLabelByName(label)) {
+                            // adding the current label to the list
+                            _t.labels.push({
+                                name: label,
+                                color: [tank.utils.randomcolor()],
+                                count : 1
+                            });
+                        }
+                        else {
+                            _t.findLabelByName(label).count += 1;
+                        }
+                    }
+                }
+                template = templates.tank.plugins.stats.panel({ id:this.id, tank:_t, node_count:_t.sigmajs.graph.nodes().length, edge_count:_t.sigmajs.graph.edges().length });
+            } else {
+                template = templates.tank.plugins.stats.panel({ id:this.id, tank:_t, node_count:0, edge_count:0});
+            }
+            document.getElementById(this.id).innerHTML = template;
+
+            // Adding the listeners
+            // =======================
+            // On chnage color on types
+            for (j = 0; j < document.getElementsByClassName('color labels').length; j++) {
+                document.getElementsByClassName('color labels')[j].addEventListener("change", this.eventOnChangeColorLabel, false);
+            }
+            // On chnage color on labels
+            for (j = 0; j < document.getElementsByClassName('color types').length; j++) {
+                document.getElementsByClassName('color types')[j].addEventListener("change", this.eventOnChangeColorType, false);
+            }
+
+            this.jscolor.init();
+        };
+
+        // Calling the refresh method
+        _self.refresh();
+
     };
 
     /**
      * The refresh function.
      */
     tank.classes.plugins.stats.prototype.refresh = function () {
-        var i, j, label, node, nodes, edge, edges, type;
-
-        // reset counter
-        for (i in tank.instance().panels.graph.labels) {
-            tank.instance().panels.graph.labels[i].count = 0;
-        }
-        // reset counter
-        for (i in tank.instance().panels.graph.types) {
-            tank.instance().panels.graph.types[i].count = 0;
-        }
-
-        // update labels
-        nodes = tank.instance().components.sigmajs.graph.nodes();
-        for (i in tank.instance().components.sigmajs.graph.nodes()) {
-            node = nodes[i];
-            for (j in node.labels) {
-                label = node.labels[j];
-                if (!tank.instance().panels.graph.labels[label]) {
-                    // adding the current label to the list
-                    tank.instance().panels.graph.labels[label] = {
-                        name: label,
-                        color: tank.utils.randomcolor(),
-                        count : 1
-                    };
-                }
-                else {
-                    tank.instance().panels.graph.labels[label].count += 1;
-                }
-            }
-        }
-        tank.instance().panels.graph.displayLabels();
-
-        // update types
-        edges = tank.instance().components.sigmajs.graph.edges();
-        for (i in tank.instance().components.sigmajs.graph.edges()) {
-            edge = edges[i];
-            if (!tank.instance().panels.graph.types[edge.type]) {
-                // adding the current type to the list
-                tank.instance().panels.graph.types[edge.type] = {
-                    name: edge.type,
-                    color: tank.utils.randomcolor(),
-                    count : 1
-                };
-            }
-            else {
-                tank.instance().panels.graph.types[edge.type].count += 1;
-            }
-        }
-        tank.instance().panels.graph.displayTypes();
-
-        // update stats data
-        document.getElementById('numberOfNode').innerHTML = '' + tank.instance().components.sigmajs.graph.nodes().length;
-        document.getElementById('numberOfEdge').innerHTML = '' + tank.instance().components.sigmajs.graph.edges().length;
-
-        tank.instance().panels.graph.eventListener();
-    };
-
-    /**
-     * The eventListerner function.
-     */
-    tank.classes.plugins.stats.prototype.eventListener = function () {
-        var j,id;
-
-        // Change color on a type
-        // ===========================
-        var onChangeColorType = function () {
-            id = this.getAttribute("data-type");
-            tank.instance().panels.graph.types[id].color = '#' + this.value;
-        };
-        for (j = 0; j < document.getElementsByClassName('color types').length; j++) {
-            document.getElementsByClassName('color types')[j].onchange = onChangeColorType;
-        }
-
-        // Change color on a label
-        // ===========================
-        var onChangeColorLabel = function () {
-            id = this.getAttribute("data-label");
-            tank.instance().panels.graph.labels[id].color = '#' + this.value;
-        };
-        for (j = 0; j < document.getElementsByClassName('color labels').length; j++) {
-            document.getElementsByClassName('color labels')[j].onchange = onChangeColorLabel;
-        }
-    };
-
-    /**
-     * Function that display labels in graph panel.
-     */
-    tank.classes.plugins.stats.prototype.displayLabels = function () {
-        var i = 0, html = '';
-        for (i in tank.instance().panels.graph.labels) {
-            html += '<li>' +
-                '' + tank.instance().panels.graph.labels[i].name + ' (' + tank.instance().panels.graph.labels[i].count + ')' +
-                '<input class="color labels pull-right" data-label="' + tank.instance().panels.graph.labels[i].name + '" value="' + tank.instance().panels.graph.labels[i].color + '" />' +
-                '</li>';
-        }
-        document.getElementById('labels').innerHTML = html;
-        jscolor.init();
-    };
-
-    /**
-     * Function that display types in graph panel.
-     */
-    tank.classes.plugins.stats.prototype.displayTypes = function () {
-        var i = 0, html = '';
-        for (i in tank.instance().panels.graph.types) {
-            html += '<li>' +
-                '' + tank.instance().panels.graph.types[i].name + ' (' + tank.instance().panels.graph.types[i].count + ')' +
-            '<input class="color types pull-right" data-type="' + tank.instance().panels.graph.types[i].name + '" value="' + tank.instance().panels.graph.types[i].color + '" />' +
-                '</li>';
-        }
-        document.getElementById('types').innerHTML = html;
-        jscolor.init();
+        this.render();
     };
 
 }).call(this);
