@@ -1,5 +1,7 @@
 <label for="server">Server URL</label>
-<input id="server" type="text" class="{{id}}-field form-control" placeholder="http://localhost:7474" value="{{tank.settings.server}}">
+<input id="neo4j.url" type="text" class="{{id}}-field form-control" placeholder="http://localhost:7474" value="{{tank.settings.neo4j.url}}">
+<input id="neo4j.login" type="text" class="{{id}}-field form-control" placeholder="http://localhost:7474" value="{{tank.settings.neo4j.user}}">
+<input id="neo4j.password" type="password" class="{{id}}-field form-control" placeholder="http://localhost:7474" value="{{tank.settings.neo4j.password}}">
 
 <label for="forceAtlas2Time">Force Atlas time</label>
 <input id="forceAtlas2Time" type="range" class="{{id}}-field form-control" min="1000" max="60000" step="1000" value="{{tank.settings.forceAtlas2Time}}">

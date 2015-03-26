@@ -100,6 +100,7 @@
                             _t.findLabelByName(label).count += 1;
                         }
                     }
+                    _t.sigmajs.graph.nodes()[i] = node;
                 }
                 template = templates.tank.plugins.stats.panel({ id:this.id, tank:_t, node_count:_t.sigmajs.graph.nodes().length, edge_count:_t.sigmajs.graph.edges().length });
             } else {

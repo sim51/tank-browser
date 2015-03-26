@@ -1,0 +1,57 @@
+// --------------------------------------------------
+// Layout : Main content
+// --------------------------------------------------
+
+#tank-container {
+  height: 100%;
+  padding: 0px;
+
+  > div {
+    height: 100%;
+  }
+
+  div.panels {
+    background-color: @secondary;
+    border: 5px solid @secondary;
+    padding: 0;
+
+    h1 {
+      display: block;
+      text-align: right;
+      padding: 10px;
+      margin: 0;
+      color: @white;
+    }
+
+    > div {
+      padding: 0;
+      height: 100%;
+    }
+
+    ul#menu {
+      li {
+        width: 100%;
+        text-align: center;
+        padding: 20px 0;
+        a { color: @white; }
+
+        &.active {
+          background-color: @greyLight;
+          a { color: @primary; }
+        }
+      }
+    }
+
+    div.panel {
+      background-color: @greyLight;
+      display: none;
+      height: 100%;
+      width: 100%;
+    }
+  }
+  
+  #tank-container-graph {
+    height: 100%;
+  }
+
+}

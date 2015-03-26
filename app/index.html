@@ -20,7 +20,6 @@
     <script src="../node_modules/sigma/plugins/sigma.layout.forceAtlas2/supervisor.js"></script>
     <script src="../node_modules/sigma/build/plugins/sigma.parsers.json.min.js"></script>
     <script src="../node_modules/sigma/build/plugins/sigma.plugins.animate.min.js"></script>
-    <script src="../node_modules/sigma/build/plugins/sigma.plugins.dragNodes.min.js"></script>
     <script src="../node_modules/sigma/build/plugins/sigma.plugins.filter.min.js"></script>
     <script src="../node_modules/sigma/build/plugins/sigma.plugins.neighborhoods.min.js"></script>
     <script src="../node_modules/sigma/build/plugins/sigma.renderers.customShapes.min.js"></script>
@@ -29,8 +28,14 @@
     <!-- END SIGMA IMPORTS -->
 
     <!-- START LINKURIOUS IMPORTS -->
+    <script src=".../node_modules/linkurious/plugins/sigma.plugins.fullScreen/sigma.plugins.fullScreen.js"></script>
+    <script src="../node_modules/linkurious/src/renderers/sigma.renderers.svg.js"></script>
     <script src="../node_modules/linkurious/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.nodes.def.js"></script>
     <script src="../node_modules/linkurious/plugins/sigma.plugins.dragNodes/sigma.plugins.dragNodes.js"></script>
+    <script src="../node_modules/linkurious/plugins/sigma.plugins.keyboard/sigma.plugins.keyboard.js"></script>
+    <script src="../node_modules/linkurious/plugins/sigma.plugins.activeState/sigma.plugins.activeState.js"></script>
+    <script src="../node_modules/linkurious/plugins/sigma.plugins.select/sigma.plugins.select.js"></script>
+    <script src="../node_modules/linkurious/plugins/sigma.plugins.lasso/sigma.plugins.lasso.js"></script>
     <!-- END LINKURIOUS IMPORTS -->
 
     <!-- Code mirror-->
@@ -43,73 +48,35 @@
 </head>
 <body>
 
-<header class="navbar navbar-fixed-top" role="banner">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="brand" href="/" title="Benoît Simard">
-                <img class="baseline" src="images/bsimard.png" alt="Benoît Simard">
+<main class="container-fluid" id="tank-container" role="main">
 
-                <h1>Cypher Browser</h1>
-            </a>
-        </div>
-        <nav class="collapse navbar-collapse bs-navbar-collapse">
-            <ul class="nav navbar-nav navbar-right">
+    <div class="col-md-3 panels container-fluid">
+
+        <h1>Tank browser</h1>
+
+        <div class="col-md-2">
+            <ul id="menu" class="list-unstyled">
+                <li class="active"><a href="#" class="menu-link" data-target-id="tank-container-stats"><i class="fa fa-pie-chart fa-3x"></i></a></li>
+                <li><a href="#" class="menu-link" data-target-id="tank-container-favorite"><i class="fa fa-star fa-3x"></i></a></li>
+                <li><a href="#" class="menu-link" data-target-id="tank-container-history"><i class="fa fa-history fa-3x"></i></a></li>
+                <li><a href="#" class="menu-link" data-target-id="tank-container-config"><i class="fa fa-cogs fa-3x"></i></a></li>
             </ul>
-        </nav>
-    </div>
-</header>
-
-
-<main class="bs-docs-masthead" id="content" role="main">
-    <div id="tank-container" class="container-fluid">
-        <div class="container-fluid">
-            <div class="col-md-3">
-                <ul id="menu" class="list-unstyled">
-                    <li>
-                        <a href="#" class="menu-link" ><i class="fa fa-pie-chart fa-2x"></i></a>
-                        <div id="tank-container-stats"></div>
-                    </li>
-                    <li>
-                        <a href="#" class="menu-link" ><i class="fa fa-star fa-2x"></i></a>
-                        <div id="tank-container-favorite"></div>
-                    </li>
-                    <li>
-                        <a href="#" class="menu-link" "><i class="fa fa-history fa-2x"></i></a>
-                        <div id="tank-container-history"></div>
-                    </li>
-                    <li class="active">
-                        <a href="#" class="menu-link" ><i class="fa fa-cogs fa-2x"></i></a>
-                        <div id="tank-container-config"></div>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-md-9" id="tank-container-graph">
-            </div>
         </div>
-        <div class="container-fluid">
-            <div id="tank-container-query" class="col-md-12">
-
-            </div>
+        <div class="col-md-10">
+            <div id="tank-container-stats" class="panel"></div>
+            <div id="tank-container-favorite" class="panel"></div>
+            <div id="tank-container-history" class="panel"></div>
+            <div id="tank-container-config" class="panel"></div>
         </div>
     </div>
+
+    <div class="col-md-9">
+        <div id="tank-container-graph"></div>
+        <div id="tank-container-query"></div>
+    </div>
+
 </main>
 
-
-<footer class="bs-docs-footer" role="contentinfo">
-    <div class="container-fluid">
-        <ul class="center-block list-inline list-unstyled">
-            <li>v0.0.1</li>
-            <li>|</li>
-            <li><a href="https://github.com/sim51">@logisima</a></li>
-        </ul>
-    </div>
-</footer>
 
 <script src="../build/js/templates.js"></script>
 <script src="../build/js/main.js"></script>
@@ -123,13 +90,18 @@
     // ========================
     // FIXME : be more generic
     var onClick = function () {
-        document.getElementById('tank-container-stats').parentNode.classList.remove('active');
-        document.getElementById('tank-container-favorite').parentNode.classList.remove('active');
-        document.getElementById('tank-container-history').parentNode.classList.remove('active');
-        document.getElementById('tank-container-config').parentNode.classList.remove('active');
+        // Reset
+        for (var i = 0; i < document.getElementsByClassName('menu-link').length; i++) {
+            var element = document.getElementsByClassName('menu-link')[i];
+            element.parentNode.classList.remove('active');
+            document.getElementById(element.getAttribute("data-target-id")).style.display = 'none';
+        }
+        // Selected element
         this.parentNode.classList.add('active');
+        document.getElementById(this.getAttribute("data-target-id")).style.display = 'block';
     };
-    for (i = 0; i < document.getElementsByClassName('menu-link').length; i++) {
+
+    for (var i = 0; i < document.getElementsByClassName('menu-link').length; i++) {
         document.getElementsByClassName('menu-link')[i].onclick = onClick;
     }
 </script>

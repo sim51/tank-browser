@@ -80,14 +80,14 @@
         this.onGraphDataLoaded = function (tankId) {
             return function (s, g) {
 
+                var i, j, k, node, edge, field, label, type;
                 var t = tank.instance(tankId);
 
                 // Refresh all plugin wit current data
-                for (var i in t.plugins ) {
+                for (i in t.plugins ) {
                     t.plugins[i].refresh();
                 }
 
-                var i, j, k, node, edge, field, label, type;
                 // Change node label
                 for (i in s.graph.nodes()) {
                     node = s.graph.nodes()[i];
@@ -162,22 +162,8 @@
                    s.stopForceAtlas2();
                 }, t.settings.forceAtlas2Time, s);
 
-                // drag node
-                // Initialize the dragNodes plugin:
-                var dragListener = sigma.plugins.dragNodes(s, s.renderers[0]);
-                dragListener.bind('startdrag', function (event) {
-                    console.log(event);
-                });
-                dragListener.bind('drag', function (event) {
-                    console.log(event);
-                });
-                dragListener.bind('drop', function (event) {
-                    console.log(event);
-                });
-                dragListener.bind('dragend', function (event) {
-                    console.log(event);
-                });
             };
+
 
         };
 
@@ -197,7 +183,9 @@
 
         if (this.query && this.query.query) {
             sigma.neo4j.cypher(
-                this.settings.server,
+                this.settings.neo4j.url,
+                this.settings.neo4j.user,
+                this.settings.neo4j.password,
                 this.query.query,
                 this.sigmajs,
                 this.onGraphDataLoaded(this.id)
@@ -211,8 +199,8 @@
      * @param {string}  name    Name of the type to search
      */
     tank.prototype.findTypeByName = function( name ) {
-        return _.findWhere(this.types, {name: name})
-    }
+        return _.findWhere(this.types, {name: name});
+    };
 
     /**
      * Return the Lael that match the name
@@ -220,8 +208,8 @@
      * @param {string}  name    Name of the type to search
      */
     tank.prototype.findLabelByName = function( name ) {
-        return _.findWhere(this.labels, {name: name})
-    }
+        return _.findWhere(this.labels, {name: name});
+    };
 
 
     /**

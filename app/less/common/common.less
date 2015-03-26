@@ -1,5 +1,5 @@
 // --------------------------------------------------
-// Some global styme
+// Some global style
 // --------------------------------------------------
 html {
   height: 100%;
@@ -9,11 +9,12 @@ body {
   background-color: @background;
   font-family: @ftPrimary;
   height: 100%;
+  //color: @white;
 }
 
 h1, h2, h3, h4, h5 {
   font-family: @ftSecondary;
-  color: @quaternary;
+  color: @primary;
 }
 
 h1, h2 {
@@ -36,115 +37,4 @@ h3 {
 
 a {
   color: @primary;
-}
-
-// --------------------------------------------------
-// Layout : header
-// --------------------------------------------------
-header.navbar {
-  & {
-    height: @layout-header-height;
-    background-color: @white;
-    background-image: none;
-    box-shadow: 0px 0px 10px @secondary;
-
-    .navbar-header {
-      height: @layout-header-height;
-
-      .brand {
-        height: @layout-header-height;
-        line-height: @layout-header-height;
-        img {
-          height: 75%;
-        }
-
-        h1 {
-          color: @secondary;
-          font-size: 1.7em;
-          line-height: 26px;
-          text-transform: uppercase;
-          text-shadow: 1px 0 rgba(0, 0, 0, 0.25);
-          display: inline-block;
-          padding: 0 0 0 30px;
-          margin: 0px;
-        }
-      }
-    }
-  }
-}
-
-// --------------------------------------------------
-// Layout : Main content
-// --------------------------------------------------
-main#content {
-  padding-top: @layout-header-height;
-  height: calc(100% ~"-" @layout-header-height ~"-" @layout-footer-height);
-
-  #tank-container {
-    height: 100%;
-
-    & div.container-fluid:first-child{
-      height: 100%;
-
-      & > div {
-        height: 100%;
-      }
-
-    }
-
-    ul#menu {
-      box-shadow: -5px 0px 10px @quaternary;
-      background-color: @quaternary;
-
-      & > li {
-        display: inline-block;
-        height: @layout-panel-nav-height;
-        margin-top: 5px;
-
-        & > a {
-          display: block;
-          padding: 10px;
-          color: @white;
-        }
-
-        & > div {
-          display: none;
-          left: 0;
-          width: 100%;
-          position: absolute;
-          margin-top: 20px;
-        }
-
-        &.active {
-          a {
-            color: @quaternary;
-            background-color: @white;
-          }
-          & > div {
-            display: block;
-
-          }
-        }
-
-      }
-      & > li:last-child {
-        float:right;
-      }
-    }
-
-  }
-
-}
-
-// --------------------------------------------------
-// Layout : footer
-// --------------------------------------------------
-footer {
-  position: fixed;
-  bottom: 0;
-  background-color: @secondary;
-  height: @layout-footer-height;
-  width: 100%;
-  color: @white;
-  text-align: center;
 }

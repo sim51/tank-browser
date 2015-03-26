@@ -19,8 +19,8 @@
         },
 
         // Custome labels & types array
-        labels: [{  name: 'my label' , color : '#FFFFFF' }], // must contain object like {  name: 'my label' , color : '#FFFFFF' }
-        types: [{  name: 'my type' , color : '#FFFFFF' }], // must contain object like {  name: 'my type' , color : '#FFFFFF' }
+        labels: [{  name: 'my label' , color : '#FFFFFF' }], // must contain object like {  name: 'my label' , color : '#FFFFFF' , size: 10}
+        types: [{  name: 'my type' , color : '#FFFFFF' }], // must contain object like {  name: 'my type' , color : '#FFFFFF' type:'line' }
 
         // Plugin list
         // ===========================
@@ -29,7 +29,11 @@
         // General config
         // ===========================
         // Neo4j url
-        server: 'http://localhost:7474',
+        neo4j : {
+            url : 'http://localhost:7474',
+            user: 'neo4j',
+            password: 'admin'
+        },
         // Force atlas2 algo default time
         forceAtlas2Time: 5000,
         // Table of field that can be used of label on graph
