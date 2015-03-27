@@ -42,7 +42,8 @@
                 indentWithTabs: true,
                 smartIndent: true,
                 mode: "cypher",
-                theme: "neo"
+                theme: "neo",
+                lineWrapping: true
             });
 
             // Event listener / bind key
