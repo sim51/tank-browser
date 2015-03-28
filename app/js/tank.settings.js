@@ -19,8 +19,8 @@
         },
 
         // Custome labels & types array
-        labels: [{  name: 'my label' , color : '#FFFFFF' }], // must contain object like {  name: 'my label' , color : '#FFFFFF' , size: 10}
-        types: [{  name: 'my type' , color : '#FFFFFF' }], // must contain object like {  name: 'my type' , color : '#FFFFFF' type:'line' }
+        labels: [{  name: 'my label' , color : '#FFFFFF', size:1}], // must contain object like {  name: 'my label' , color : '#FFFFFF' , size: 10}
+        types: [{  name: 'my type' , color : '#FFFFFF', size:1, shape:'curve' }], // must contain object like {  name: 'my type' , color : '#FFFFFF' type:'line' } ['line', 'curve', 'arrow', 'curvedArrow']
 
         // Plugin list
         // ===========================
@@ -37,7 +37,19 @@
         // Force atlas2 algo default time
         forceAtlas2Time: 5000,
         // Table of field that can be used of label on graph
-        field_named: ['title', 'name' , 'label']
+        field_named: ['title', 'name' , 'label'],
+
+        // Sigmajs config
+        // ============================
+        sigmajs: {
+            minNodeSize: 1,
+            maxNodeSize: 10,
+            minEdgeSize: 0.1,
+            maxEdgeSize: 2,
+            enableEdgeHovering: true,
+            edgeHoverSizeRatio: 2,
+            edgeLabelSize: 'proportional'
+        }
 
     };
 

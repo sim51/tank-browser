@@ -56,11 +56,5 @@
         }
     };
 
-    /**
-     * Handler bar helper.
-     */
-    Handlebars.registerHelper("timeAgo", function(date) {
-        return tank.utils.timeago(date);
-    });
 
 }).call(this);

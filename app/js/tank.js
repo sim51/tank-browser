@@ -60,6 +60,14 @@
             renderer: {
                 container: document.getElementById(sigmaDomId),
                 type: 'canvas'
+            },
+            settings: {
+                minNodeSize: 1,
+                maxNodeSize: 10,
+                minEdgeSize: 0.1,
+                maxEdgeSize: 2,
+                enableEdgeHovering: true,
+                edgeHoverSizeRatio: 2
             }
         });
 
@@ -92,16 +100,20 @@
                 for (i in s.graph.nodes()) {
                     node = s.graph.nodes()[i];
 
-                    // changing color
+                    // changing style of node
                     for (j in t.labels) {
                         label = t.labels[j];
-                        for (k in node.labels) {
-                            if (node.labels[k] === label.name) {
+                        for (k in node.neo4j_labels) {
+                            if (node.neo4j_labels[k] === label.name) {
+                                // Color
                                 delete node.color;
-                                if (node.colors)
+                                if (node.colors) {
                                     node.colors.push(label.color);
-                                else
+                                } else {
                                     node.colors = [label.color];
+                                }
+                                // Size
+                                node.size = label.size;
                             }
                         }
                     }
@@ -109,8 +121,8 @@
                     // changing label
                     for (j in t.settings.field_named) {
                         field = t.settings.field_named[j];
-                        if (node[field]) {
-                            node.label = node[field];
+                        if (node.neo4j_data[field]) {
+                            node.label = node.neo4j_data[field];
                             break;
                         }
                     }
@@ -120,19 +132,21 @@
                 for (i in s.graph.edges()) {
                     edge = s.graph.edges()[i];
 
-                    // changing color
+                    // changing edge style
                     for (j in t.types) {
                         type = t.types[j];
-                        if (edge.type === type.name) {
+                        if (edge.neo4j_type === type.name) {
                             edge.color = type.color;
+                            edge.size = type.size;
+                            edge.type = type.shape;
                         }
                     }
 
                     // changing label
                     for (j in t.settings.field_named) {
                         field = t.settings.field_named[j];
-                        if (edge[field]) {
-                            edge.label = edge[field];
+                        if (edge.neo4j_data[field]) {
+                            edge.label = edge.neo4j_data[field];
                             break;
                         }
                     }

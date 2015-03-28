@@ -10,8 +10,25 @@
     <ul id="labels">
         {{#tank.labels}}
             <li>
-                {{name}} ({{count}})
-                <input class="color labels pull-right" data-id="{{@index}}" value="{{color}}" />
+                <span>{{name}} ({{count}})</span>
+
+                <form class="form-horizontal">
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="color-label">Color</label>
+                        <div class="col-sm-8">
+                            <input id="color-label" class="color labels form-control" data-id="{{@index}}" value="{{color}}" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="size-label">Size</label>
+                        <div class="col-sm-8">
+                            <input id="size-label" type="range" min="0.1" max="2" step="0.1" class="form-control labels size" data-id="{{@index}}" value="{{size}}" />
+                        </div>
+                    </div>
+
+                </form>
             </li>
         {{/tank.labels}}
     </ul>
@@ -21,8 +38,41 @@
     <ul id="types">
         {{#tank.types}}
             <li>
-                {{name}} ({{count}})
-                <input class="color types pull-right" data-id="{{@index}}" value="{{color}}" />
+                <span>{{name}} ({{count}})</span>
+
+                <form class="form-horizontal">
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="color-type">Color</label>
+                        <div class="col-sm-8">
+                            <input id="color-type" class="color types form-control" data-id="{{@index}}" value="{{color}}" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="size-type">Size</label>
+                        <div class="col-sm-8">
+                            <input id="size-type" type="range" min="0.1" max="2" step="0.1" class="form-control size types" data-id="{{@index}}" value="{{size}}" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="type-shape">Type</label>
+                        <div class="col-sm-8">
+                            <select id="type-shape" class="form-control types shape" data-id="{{@index}}">
+                                <option {{selected shape "line" }} >line</option>
+                                <option {{selected shape "curve" }} >curve</option>
+                                <option {{selected shape "arrow" }} >arrow</option>
+                                <option {{selected shape "curvedArrow" }} >curvedArrow</option>
+                                <option {{selected shape "dashed" }} >dashed</option>
+                                <option {{selected shape "dotted" }} >dotted</option>
+                                <option {{selected shape "parallel" }} >parallel</option>
+                                <option {{selected shape "tapered" }} >tapered</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </form>
             </li>
         {{/tank.types}}
     </ul>
