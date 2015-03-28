@@ -1,10 +1,15 @@
-<ul id="{{id}}-list" class="list-unstyled cm-s-neo">
-    {{#tank.history}}
-    <li>
-        <a href="#" class="{{../id}}-link CodeMirror" data-id="{{@index}}">
-            {{{title}}}
-        </a>
-    </li>
-    {{/tank.history}}
-</ul>
+<fieldset>
+    <legend>History</legend>
 
+    <ul id="{{id}}-list" class="list-unstyled cm-s-neo tank-history">
+        {{#tank.history}}
+        <li>
+            <div class="time-ago">{{timeAgo date}}</div>
+            <a href="#" class="{{../id}}-link CodeMirror" data-id="{{@index}}">
+                {{{title}}}
+            </a>
+        </li>
+        {{/tank.history}}
+    </ul>
+
+</fieldset>

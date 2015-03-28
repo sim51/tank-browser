@@ -34,7 +34,7 @@
         this.eventRunHistory = function () {
             console.log("[tank.plugins.history] => eventRunHistory");
             var itemId = this.getAttribute("data-id");
-            _t.query = _t.history[itemId];
+            _t.query = _t.history[itemId].query;
             _t.refresh();
         };
 
@@ -43,7 +43,11 @@
          */
         this.saveIntoHistory = function () {
             console.log("[tank.plugins.history] => saveIntoHistory");
-            _t.history.push(_t.query);
+            _t.history.push({
+                query: _t.query.query,
+                title: _t.query.title,
+                date: new Date()
+            });
         };
 
         /**

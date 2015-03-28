@@ -1,7 +1,37 @@
-<label for="server">Server URL</label>
-<input id="neo4j.url" type="text" class="{{id}}-field form-control" placeholder="http://localhost:7474" value="{{tank.settings.neo4j.url}}">
-<input id="neo4j.login" type="text" class="{{id}}-field form-control" placeholder="http://localhost:7474" value="{{tank.settings.neo4j.user}}">
-<input id="neo4j.password" type="password" class="{{id}}-field form-control" placeholder="http://localhost:7474" value="{{tank.settings.neo4j.password}}">
+<fieldset>
+    <legend>Neo4j</legend>
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-4 control-label" for="neo4j.url">Server URL</label>
+            <div class="col-sm-8">
+                <input id="neo4j.url" type="url" class="form-control {{id}}-field form-control" placeholder="http://localhost:7474" value="{{tank.settings.neo4j.url}}">
+            </div>
+        </div>
 
-<label for="forceAtlas2Time">Force Atlas time</label>
-<input id="forceAtlas2Time" type="range" class="{{id}}-field form-control" min="1000" max="60000" step="1000" value="{{tank.settings.forceAtlas2Time}}">
+        <div class="form-group">
+            <label class="col-sm-4 control-label" for="neo4j.login">Login</label>
+            <div class="col-sm-8">
+                <input id="neo4j.login" type="text" class="form-control {{id}}-field form-control" placeholder="http://localhost:7474" value="{{tank.settings.neo4j.user}}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-4 control-label" for="neo4j.password">Password</label>
+            <div class="col-sm-8">
+                <input id="neo4j.password" type="password" class="form-control {{id}}-field form-control" placeholder="http://localhost:7474" value="{{tank.settings.neo4j.password}}">
+            </div>
+        </div>
+    </form>
+</fieldset>
+
+<fieldset>
+    <legend>Sigmajs</legend>
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-4 control-label" for="forceAtlas2Time">Force Atlas</label>
+            <div class="col-sm-8">
+                <input id="forceAtlas2Time" type="range" class="form-control {{id}}-field form-control" min="1000" max="60000" step="1000" value="{{tank.settings.forceAtlas2Time}}">
+            </div>
+        </div>
+    </form>
+</fieldset>

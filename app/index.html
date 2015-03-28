@@ -56,9 +56,9 @@
 
         <div class="col-md-2">
             <ul id="menu" class="list-unstyled">
-                <li class="active"><a href="#" class="menu-link" data-target-id="tank-container-stats"><i class="fa fa-pie-chart fa-3x"></i></a></li>
-                <li><a href="#" class="menu-link" data-target-id="tank-container-favorite"><i class="fa fa-star fa-3x"></i></a></li>
+                <li><a href="#" class="menu-link" data-target-id="tank-container-stats"><i class="fa fa-pie-chart fa-3x"></i></a></li>
                 <li><a href="#" class="menu-link" data-target-id="tank-container-history"><i class="fa fa-history fa-3x"></i></a></li>
+                <li><a href="#" class="menu-link" data-target-id="tank-container-favorite"><i class="fa fa-star fa-3x"></i></a></li>
                 <li><a href="#" class="menu-link" data-target-id="tank-container-config"><i class="fa fa-cogs fa-3x"></i></a></li>
             </ul>
         </div>
@@ -88,7 +88,6 @@
 
     // Panel navigation
     // ========================
-    // FIXME : be more generic
     var onClick = function () {
         // Reset
         for (var i = 0; i < document.getElementsByClassName('menu-link').length; i++) {
@@ -103,7 +102,10 @@
 
     for (var i = 0; i < document.getElementsByClassName('menu-link').length; i++) {
         document.getElementsByClassName('menu-link')[i].onclick = onClick;
-    }
+    };
+
+    document.getElementsByClassName('menu-link')[0].onclick();
+
 </script>
 
 </body>

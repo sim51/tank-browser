@@ -1,10 +1,13 @@
-<ul id="{{id}}-list" class="list-unstyled cm-s-neo">
-    {{#tank.favorites}}
-        <li>
-            <a href="#" class="{{../id}}-link CodeMirror" data-id="{{@index}}">
-                {{{title}}}
-            </a>
-        </li>
-    {{/tank.favorites}}
-</ul>
+<fieldset>
+    <legend>Favorite</legend>
 
+    <ul id="{{id}}-list" class="list-unstyled cm-s-neo tank-favorite">
+        {{#tank.favorites}}
+            <li>
+                <a href="#" class="{{../id}}-link CodeMirror" data-id="{{@index}}">
+                    {{{title}}}
+                </a>
+            </li>
+        {{/tank.favorites}}
+    </ul>
+</fieldset>

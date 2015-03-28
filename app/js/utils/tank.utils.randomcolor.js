@@ -21,4 +21,11 @@
         return color;
     };
 
+    /**
+     * Handler bar helper.
+     */
+    Handlebars.registerHelper("randomcolor", function() {
+        return tank.utils.randomcolor();
+    });
+
 }).call(this);
