@@ -38,6 +38,9 @@
         forceAtlas2Time: 5000,
         // Table of field that can be used of label on graph
         field_named: ['title', 'name' , 'label'],
+        default_node_size : 1,
+        default_edge_size : 0.1,
+        default_edge_shape : 'tapered',
 
         // Sigmajs config
         // ============================

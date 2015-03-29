@@ -11,6 +11,14 @@
 
     a, div.demo {
       display: inline-block;
+      div {
+        visibility: hidden;
+        text-transform: uppercase;
+        margin: 0 auto;
+        &:first-letter {
+          visibility: visible;
+        }
+      }
     }
 
     form {

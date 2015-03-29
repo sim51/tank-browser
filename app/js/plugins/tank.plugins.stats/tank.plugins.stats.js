@@ -135,8 +135,8 @@
                         _t.types.push({
                             name: edge.neo4j_type,
                             color: tank.utils.randomcolor(),
-                            size: 0.1,
-                            shape: "arrow",
+                            size: tank.settings.default_edge_size,
+                            shape: tank.settings.default_edge_shape,
                             count: 1
                         });
                     }
@@ -155,7 +155,7 @@
                             _t.labels.push({
                                 name: label,
                                 color: tank.utils.randomcolor(),
-                                size: 1,
+                                size: tank.settings.default_node_size,
                                 count: 1
                             });
                         }
