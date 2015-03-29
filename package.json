@@ -28,11 +28,8 @@
         "bootstrap": "^3.3.2",
         "codemirror": "^5.0.0",
         "font-awesome" : "^4.3.0",
-        "sigma": "^1.0.3",
+        "sigma": "https://github.com/sim51/sigma.js/archive/master.tar.gz",
         "handlebars": "^3.0.0",
         "file-dependencies": "^1.2.1"
-    },
-    "fileDependencies": {
-        "sigma-neo4j": "https://raw.githubusercontent.com/sim51/sigma.js/master/plugins/sigma.parsers.cypher/sigma.parsers.cypher.js"
     }
 }
