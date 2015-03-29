@@ -61,14 +61,7 @@
                 container: document.getElementById(sigmaDomId),
                 type: 'canvas'
             },
-            settings: {
-                minNodeSize: 1,
-                maxNodeSize: 10,
-                minEdgeSize: 0.1,
-                maxEdgeSize: 2,
-                enableEdgeHovering: true,
-                edgeHoverSizeRatio: 2
-            }
+            settings: this.settings.sigmajs
         });
 
 
@@ -163,7 +156,7 @@
                     strongGravityMode: false,
                     gravity: 1,
                     slowDown: 1,
-                    barnesHutOptimize: false,
+                    barnesHutOptimize: true,
                     barnesHutTheta: 0.5,
                     startingIterations: 1,
                     iterationsPerRender: 1

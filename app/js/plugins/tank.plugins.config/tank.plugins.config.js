@@ -33,7 +33,7 @@
         this.eventChangeConfig = function () {
             console.log("[tank.plugins.config] => eventChangeConfig");
             // update config param
-            var param = this.getAttribute("id");
+            var param = this.getAttribute("id").replace(_self.id + "-", "");
             var value = this.value;
             eval("_t.settings." + param + " = '" + value + "'");
             _t.refresh();

@@ -12,19 +12,24 @@
             <li>
                 <span>{{name}} ({{count}})</span>
 
+                <div class="demo"
+                     style="{{circleStyle color 20 size}}">
+                </div>
+
+                <a href="#" class="{{../id}}-modify pull-right"><i class="fa fa-pencil"></i></a>
                 <form class="form-horizontal">
 
                     <div class="form-group">
-                        <label class="col-sm-4 control-label" for="color-label">Color</label>
+                        <label class="col-sm-4 control-label" for="{{../id}}-color-label-{{@index}}">Color</label>
                         <div class="col-sm-8">
-                            <input id="color-label" class="color labels form-control" data-id="{{@index}}" value="{{color}}" />
+                            <input id="{{../id}}-color-label-{{@index}}" class="{{../id}} color labels form-control" data-id="{{@index}}" value="{{color}}" />
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-4 control-label" for="size-label">Size</label>
+                        <label class="col-sm-4 control-label" for="{{../id}}-size-label-{{@index}}">Size</label>
                         <div class="col-sm-8">
-                            <input id="size-label" type="range" min="0.1" max="2" step="0.1" class="form-control labels size" data-id="{{@index}}" value="{{size}}" />
+                            <input id="{{../id}}-size-label-{{@index}}" type="range" min="0.5" max="10" step="0.5" class="{{../id}} form-control labels size" data-id="{{@index}}" value="{{size}}" />
                         </div>
                     </div>
 
@@ -39,27 +44,30 @@
         {{#tank.types}}
             <li>
                 <span>{{name}} ({{count}})</span>
-
+                <div class="demo"
+                     style="{{circleStyle color 20 size}}">
+                </div>
+                <a href="#" class="{{../id}}-modify pull-right"><i class="fa fa-pencil"></i></a>
                 <form class="form-horizontal">
 
                     <div class="form-group">
-                        <label class="col-sm-4 control-label" for="color-type">Color</label>
+                        <label class="col-sm-4 control-label" for="{{../id}}-color-type-{{@index}}">Color</label>
                         <div class="col-sm-8">
-                            <input id="color-type" class="color types form-control" data-id="{{@index}}" value="{{color}}" />
+                            <input id="{{../id}}-color-type-{{@index}}" class="{{../id}} color types form-control" data-id="{{@index}}" value="{{color}}" />
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-4 control-label" for="size-type">Size</label>
+                        <label class="col-sm-4 control-label" for="{{../id}}-size-type-{{@index}}">Size</label>
                         <div class="col-sm-8">
-                            <input id="size-type" type="range" min="0.1" max="2" step="0.1" class="form-control size types" data-id="{{@index}}" value="{{size}}" />
+                            <input id="{{../id}}-size-type-{{@index}}" type="range" min="0.1" max="2" step="0.1" class="{{../id}} form-control size types" data-id="{{@index}}" value="{{size}}" />
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-4 control-label" for="type-shape">Type</label>
+                        <label class="col-sm-4 control-label" for="{{../id}}-shape-type-{{@index}}">Type</label>
                         <div class="col-sm-8">
-                            <select id="type-shape" class="form-control types shape" data-id="{{@index}}">
+                            <select id="{{../id}}-shape-type-{{@index}}" class="{{../id}} form-control types shape" data-id="{{@index}}">
                                 <option {{selected shape "line" }} >line</option>
                                 <option {{selected shape "curve" }} >curve</option>
                                 <option {{selected shape "arrow" }} >arrow</option>

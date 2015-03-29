@@ -19,8 +19,8 @@
         },
 
         // Custome labels & types array
-        labels: [{  name: 'my label' , color : '#FFFFFF', size:1}], // must contain object like {  name: 'my label' , color : '#FFFFFF' , size: 10}
-        types: [{  name: 'my type' , color : '#FFFFFF', size:1, shape:'curve' }], // must contain object like {  name: 'my type' , color : '#FFFFFF' type:'line' } ['line', 'curve', 'arrow', 'curvedArrow']
+        labels: [], // must contain object like {  name: 'my label' , color : '#FFFFFF', size:1}
+        types: [], // must contain object like {  name: 'my type' , color : '#FFFFFF', size:1, shape:'curve' }
 
         // Plugin list
         // ===========================
@@ -42,13 +42,13 @@
         // Sigmajs config
         // ============================
         sigmajs: {
-            minNodeSize: 1,
+            minNodeSize: 0,
             maxNodeSize: 10,
             minEdgeSize: 0.1,
             maxEdgeSize: 2,
             enableEdgeHovering: true,
             edgeHoverSizeRatio: 2,
-            edgeLabelSize: 'proportional'
+            edgeHoverExtremities: true
         }
 
     };
