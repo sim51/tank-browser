@@ -26,6 +26,12 @@
         }
     });
 
+    /**
+     * Handler bar helper to retrieve the first letter of a word
+     */
+    Handlebars.registerHelper("firstLetter", function (value) {
+        return value.charAt(0);
+    });
 
     /**
      * Handler bar helper for select
@@ -35,6 +41,7 @@
         var style = "";
         style += "background-color:" + color + ";";
         style += "width:" + realRadian + "px; height:" + realRadian + "px;";
+        style += "line-height:" + realRadian + "px;";
         console.log("radian :" + radian + " - coef :" + coef + " - display: " + realRadian);
         return style;
     });

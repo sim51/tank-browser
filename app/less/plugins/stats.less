@@ -11,13 +11,16 @@
 
     a, div.demo {
       display: inline-block;
-      div {
-        visibility: hidden;
+      vertical-align: middle;
+      a {
         text-transform: uppercase;
-        margin: 0 auto;
-        &:first-letter {
-          visibility: visible;
-        }
+        text-align: center;
+        color: @white;
+        font-weight: bold;
+        display: inline-block;
+        vertical-align: middle;
+        width: 100%;
+        height: 100%;
       }
     }
 

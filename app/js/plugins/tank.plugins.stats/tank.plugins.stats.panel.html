@@ -12,8 +12,7 @@
             <li>
                 <span>{{name}} ({{count}})</span>
 
-                <div class="demo"
-                     style="{{circleStyle color 20 size}}">
+                <div class="demo" style="{{circleStyle color 10 size}}">
                 </div>
 
                 <a href="#" class="{{../id}}-modify pull-right"><i class="fa fa-pencil"></i></a>
@@ -44,9 +43,8 @@
         {{#tank.types}}
             <li>
                 <span>{{name}} ({{count}})</span>
-                <div class="demo"
-                     style="{{circleStyle color 20 size}}">
-                    <div>{{shape}}</div>
+                <div class="demo" style="{{circleStyle color 20 size}}">
+                    <a href="#" title="{{shape}}">{{firstLetter shape}}</a>
                 </div>
                 <a href="#" class="{{../id}}-modify pull-right"><i class="fa fa-pencil"></i></a>
                 <form class="form-horizontal">
