@@ -70,7 +70,7 @@
             // Save button into the render of query
             if(!document.getElementById(this.id + "-save")) {
                 template = templates.tank.plugins.favorite.button({ id: this.id, tank: _t});
-                document.getElementById(_t.plugins.query.id + "-run").insertAdjacentHTML('afterend', template);
+                document.getElementById(_t.plugins.query.id + "-run").insertAdjacentHTML('beforebegin', template);
             }
 
             // Adding the listeners
