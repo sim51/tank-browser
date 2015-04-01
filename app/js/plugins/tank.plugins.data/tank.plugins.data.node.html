@@ -1,0 +1,16 @@
+<div class="data container-fluid">
+    <div class="col-sm-4 field">ID</div>
+    <div class="col-sm-8 value">{{node.id}}</div>
+</div>
+
+<div class="data container-fluid">
+    <div class="col-sm-4 field">Labels</div>
+    <div class="col-sm-8 value">{{#node.neo4j_labels}}{{.}} {{/node.neo4j_labels}}</div>
+</div>
+
+{{#each node.neo4j_data}}
+    <div class="data container-fluid">
+        <div class="col-sm-4 field">{{@key}}</div>
+        <div class="col-sm-8 value">{{this}}</div>
+    </div>
+{{/each}}

@@ -170,7 +170,7 @@
                 }
                 _t.sigmajs.graph.nodes()[i] = node;
             }
-        }
+        };
 
         /**
          * Function that generate the render of this module.

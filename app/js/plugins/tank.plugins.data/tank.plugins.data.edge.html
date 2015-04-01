@@ -1,0 +1,16 @@
+<div class="data container-fluid">
+    <div class="col-sm-4 field">ID</div>
+    <div class="col-sm-8 value">{{edge.id}}</div>
+</div>
+
+<div class="data container-fluid">
+    <div class="col-sm-4 field">Type</div>
+    <div class="col-sm-8 value">{{edge.neo4j_type}}</div>
+</div>
+
+{{#each edge.neo4j_data}}
+<div class="data container-fluid">
+    <div class="col-sm-4 field">{{@key}}</div>
+    <div class="col-sm-8 value">{{this}}</div>
+</div>
+{{/each}}

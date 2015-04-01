@@ -18,13 +18,13 @@
             query: 'MATCH (n) OPTIONAL MATCH (n)-[r]->(m) RETURN n,r,m LIMIT 100'
         },
 
-        // Custome labels & types array
+        // Custom labels & types array
         labels: [], // must contain object like {  name: 'my label' , color : '#FFFFFF', size:1}
         types: [], // must contain object like {  name: 'my type' , color : '#FFFFFF', size:1, shape:'curve' }
 
         // Plugin list
         // ===========================
-        plugins: ['query', 'codemirror', 'favorite', 'history', 'config' , 'stats'],
+        plugins: ['query', 'codemirror', 'favorite', 'history', 'config' , 'stats', 'data'],
 
         // General config
         // ===========================
@@ -34,6 +34,7 @@
             user: 'neo4j',
             password: 'admin'
         },
+
         // Force atlas2 algo default time
         forceAtlas2Time: 5000,
         // Table of field that can be used of label on graph

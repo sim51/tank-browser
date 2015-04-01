@@ -42,7 +42,6 @@
         style += "background-color:" + color + ";";
         style += "width:" + realRadian + "px; height:" + realRadian + "px;";
         style += "line-height:" + realRadian + "px;";
-        console.log("radian :" + radian + " - coef :" + coef + " - display: " + realRadian);
         return style;
     });
 
