@@ -51,7 +51,9 @@
             maxEdgeSize: 2,
             enableEdgeHovering: true,
             edgeHoverSizeRatio: 2,
-            edgeHoverExtremities: true
+            edgeHoverExtremities: true,
+            drawLabels: true,
+            drawEdgeLabels: true
         }
 
     };

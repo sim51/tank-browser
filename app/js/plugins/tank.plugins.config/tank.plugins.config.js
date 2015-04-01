@@ -35,7 +35,12 @@
             // update config param
             var param = this.getAttribute("id").replace(_self.id + "-", "");
             var value = this.value;
-            eval("_t.settings." + param + " = '" + value + "'");
+            if( value === 'true' || value === 'false') {
+                eval("_t.settings." + param + " = " + value + "");
+            }
+            else {
+                eval("_t.settings." + param + " = '" + value + "'");
+            }
             _t.refresh();
         };
 

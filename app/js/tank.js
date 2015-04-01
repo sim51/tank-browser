@@ -47,29 +47,30 @@
             configurable: true
         });
 
-
-        // Sigmajs
-        // =========================
-        // first we create (if needed) a dom element with the good id
-        var sigmaDomId = this.id + '-graph';
-        if(!document.getElementById(sigmaDomId)) {
-            document.getElementById(this.id).innerHTML = '<div id="' + sigmaDomId + '"></div>';
+        this.initPlugins = function () {
+            for (i = 0; i< this.settings.plugins.length; i++) {
+                name = this.settings.plugins[i];
+                this.plugins[name] = new tank.classes.plugins[name](_self);
+            };
         }
-        // init sigma
-        this.sigmajs = new sigma({
-            renderer: {
-                container: document.getElementById(sigmaDomId),
-                type: 'canvas'
-            },
-            settings: this.settings.sigmajs
-        });
 
+        this.initSigmajs = function () {
+            // Sigmajs
+            // =========================
+            // first we create (if needed) a dom element with the good id
+            var sigmaDomId = this.id + '-graph';
+            if(!document.getElementById(sigmaDomId)) {
+                document.getElementById(this.id).innerHTML = '<div id="' + sigmaDomId + '"></div>';
+            }
 
-        // Initiate plugins
-        // =========================
-        for (i = 0; i< this.settings.plugins.length; i++) {
-            name = this.settings.plugins[i];
-            this.plugins[name] = new tank.classes.plugins[name](_self);
+            // init sigma
+            this.sigmajs = new sigma({
+                renderer: {
+                    container: document.getElementById(sigmaDomId),
+                    type: 'canvas'
+                },
+                settings: this.settings.sigmajs
+            });
         }
 
         /**
@@ -174,6 +175,12 @@
 
         };
 
+        // Init sigmajs instance
+        this.initSigmajs();
+
+        // Init all plugins
+        this.initPlugins();
+
         // We call the refresh methode
         this.refresh();
 
@@ -183,10 +190,9 @@
      * Refresh the tank instance.
      */
     tank.prototype.refresh = function () {
-        // Refresh sigma
-        this.sigmajs.killForceAtlas2();
-        this.sigmajs.graph.clear();
-        this.sigmajs.refresh();
+        // Reinit sigmajs
+        this.sigmajs.kill();
+        this.initSigmajs();
 
         if (this.query && this.query.query) {
             sigma.neo4j.cypher(

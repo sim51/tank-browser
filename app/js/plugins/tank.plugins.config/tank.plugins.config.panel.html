@@ -33,5 +33,23 @@
                 <input id="{{id}}-forceAtlas2Time" type="range" class="form-control {{id}}-field form-control" min="1000" max="60000" step="1000" value="{{tank.settings.forceAtlas2Time}}">
             </div>
         </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label" for="{{id}}-sigmajs.drawLabels">Display label ?</label>
+            <div class="col-sm-8">
+                <select id="{{id}}-sigmajs.drawLabels" class="form-control {{id}}-field form-control">
+                    <option {{selected tank.settings.sigmajs.drawLabels true }} >true</option>
+                    <option {{selected tank.settings.sigmajs.drawLabels false }} >false</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label" for="{{id}}-sigmajs.drawEdgeLabels">Display edge label ?</label>
+            <div class="col-sm-8">
+                <select id="{{id}}-sigmajs.drawEdgeLabels" class="form-control {{id}}-field form-control">
+                    <option {{selected tank.settings.sigmajs.drawEdgeLabels true }} >true</option>
+                    <option {{selected tank.settings.sigmajs.drawEdgeLabels false }} >false</option>
+                </select>
+            </div>
+        </div>
     </form>
 </fieldset>
