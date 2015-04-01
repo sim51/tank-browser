@@ -18,7 +18,7 @@
 
         // Init settings
         // =========================
-        this.settings = tank.utils.extend(tank.settings, conf);
+        this.settings = tank.utils.extend(tank.settings, _conf);
 
 
         // The default local var
@@ -26,13 +26,13 @@
         this.query = this.settings.query;
 
 
-        // Identifiant of this instance
+        // Id of this instance
         // =========================
         this.id = this.settings.id;
         __instances[this.id] = this;
 
 
-        // Define object attributs
+        // Define object attributes
         // =========================
         Object.defineProperty(this, 'plugins', {
             value: [],
@@ -47,13 +47,28 @@
             configurable: true
         });
 
+        /**
+         * Initialize all plugin
+         */
         this.initPlugins = function () {
             for (i = 0; i< this.settings.plugins.length; i++) {
-                name = this.settings.plugins[i];
+                var name = this.settings.plugins[i];
                 this.plugins[name] = new tank.classes.plugins[name](_self);
-            };
-        }
+            }
+        };
 
+        /**
+         * Refresh all enabled plugin.
+         */
+        this.refreshPlugins = function () {
+            for (var i in this.plugins ) {
+                this.plugins[i].refresh();
+            }
+        };
+
+        /**
+         * Initialize sigmajs.
+         */
         this.initSigmajs = function () {
             // Sigmajs
             // =========================
@@ -71,7 +86,81 @@
                 },
                 settings: this.settings.sigmajs
             });
-        }
+        };
+
+        /**
+         * Update sigma graph node.
+         */
+        this.updateGraphNode = function () {
+            var s = this.sigmajs, i, j, k, node, field, label;
+
+            // Change node label & color
+            // step 1 : reinitialize colors attributes
+            _.each(s.graph.nodes(), function (node) {
+                node.colors = [];
+            });
+            for (i in s.graph.nodes()) {
+                node = s.graph.nodes()[i];
+
+                // changing style of node
+                for (j in this.labels) {
+                    label = this.labels[j];
+                    for (k in node.neo4j_labels) {
+                        if (node.neo4j_labels[k] === label.name) {
+                            // Color
+                            delete node.color;
+                            if (node.colors) {
+                                node.colors.push(label.color);
+                            } else {
+                                node.colors = [label.color];
+                            }
+                            // Size
+                            node.size = label.size;
+                        }
+                    }
+                }
+
+                // changing label
+                for (j in this.settings.field_named) {
+                    field = this.settings.field_named[j];
+                    if (node.neo4j_data[field]) {
+                        node.label = node.neo4j_data[field];
+                        break;
+                    }
+                }
+            }
+        };
+
+        /**
+         * Update sigma graph edge.
+         */
+        this.updateGraphEdge = function () {
+            var s = this.sigmajs, i, j, edge, field, type;
+
+            // Change edge label
+            for (i in s.graph.edges()) {
+                edge = s.graph.edges()[i];
+
+                // changing edge style
+                for (j in this.types) {
+                    type = this.types[j];
+                    if (edge.neo4j_type === type.name) {
+                        edge.color = type.color;
+                        edge.size = type.size;
+                        edge.type = type.shape;
+                    }
+                }
+
+                // changing label
+                for (j in this.settings.field_named) {
+                    field = this.settings.field_named[j];
+                    if (edge.neo4j_data[field]) {
+                        edge.label = edge.neo4j_data[field];
+                        break;
+                    }
+                }
+            }
+        };
 
         /**
          * Closure callback function for sigma & neo4j execute cypher method.
@@ -82,70 +171,12 @@
         this.onGraphDataLoaded = function (tankId) {
             return function (s, g) {
 
-                var i, j, k, node, edge, field, label, type;
                 var t = tank.instance(tankId);
 
-                // Refresh all plugin wit current data
-                for (i in t.plugins ) {
-                    t.plugins[i].refresh();
-                }
+                t.refreshPlugins();
 
-                // Change node label
-                for (i in s.graph.nodes()) {
-                    node = s.graph.nodes()[i];
-
-                    // changing style of node
-                    for (j in t.labels) {
-                        label = t.labels[j];
-                        for (k in node.neo4j_labels) {
-                            if (node.neo4j_labels[k] === label.name) {
-                                // Color
-                                delete node.color;
-                                if (node.colors) {
-                                    node.colors.push(label.color);
-                                } else {
-                                    node.colors = [label.color];
-                                }
-                                // Size
-                                node.size = label.size;
-                            }
-                        }
-                    }
-
-                    // changing label
-                    for (j in t.settings.field_named) {
-                        field = t.settings.field_named[j];
-                        if (node.neo4j_data[field]) {
-                            node.label = node.neo4j_data[field];
-                            break;
-                        }
-                    }
-                }
-
-                // Change edge label
-                for (i in s.graph.edges()) {
-                    edge = s.graph.edges()[i];
-
-                    // changing edge style
-                    for (j in t.types) {
-                        type = t.types[j];
-                        if (edge.neo4j_type === type.name) {
-                            edge.color = type.color;
-                            edge.size = type.size;
-                            edge.type = type.shape;
-                        }
-                    }
-
-                    // changing label
-                    for (j in t.settings.field_named) {
-                        field = t.settings.field_named[j];
-                        if (edge.neo4j_data[field]) {
-                            edge.label = edge.neo4j_data[field];
-                            break;
-                        }
-                    }
-                }
-
+                t.updateGraphNode();
+                t.updateGraphEdge();
 
                 // starting forceatlas2 algo
                 s.startForceAtlas2({
@@ -181,7 +212,7 @@
         // Init all plugins
         this.initPlugins();
 
-        // We call the refresh methode
+        // We call the refresh method
         this.refresh();
 
     };
@@ -207,7 +238,7 @@
     };
 
     /**
-     * Retunn the Type that match the name
+     * Return the Type that match the name
      *
      * @param {string}  name    Name of the type to search
      */

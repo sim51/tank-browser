@@ -39,132 +39,152 @@
         }
 
         /**
-         * Event : when display form to change edge/node attributs
+         * Redraw the sigmajs graph & plugin.
+         */
+        this.redraw = function () {
+            _t.updateGraphNode();
+            _t.updateGraphEdge();
+            _t.sigmajs.refresh();
+            this.render();
+        };
+
+        /**
+         * Event : when display form to change edge/node attributes
          */
         this.eventToggleModifyForm = function () {
-            console.log("[tank.plugins.stats] => toggle modify form");
+            var id = this.getAttribute("data-id");
+            var type = this.getAttribute("data-type");
             var form = this.nextElementSibling;
+            var display = false;
+
             if (form.style.display == "block") {
                 form.style.display = 'none';
             } else {
                 form.style.display = 'block';
+                display = true;
             }
+
+            eval("_t." + type + "[" + id + "].open = " + display);
         };
 
         /**
-         * Event : change color for label.
+         * Event : change color.
          */
-        this.eventOnChangeColorLabel = function () {
-            console.log("[tank.plugins.stats] => color label");
+        this.eventOnChangeColor = function () {
             var id = this.getAttribute("data-id");
-            _t.labels[id].color = '#' + this.value;
+            var type = this.getAttribute("data-type");
 
-            // Calling the refresh method
-            _self.refresh();
+            if( type === "types") {
+                _t.types[id].color = '#' + this.value;
+            }
+            else {
+                _t.labels[id].color = '#' + this.value;
+            }
+
+
+            // Redraw
+            _self.redraw();
         };
 
         /**
-         * Event : change size for label.
+         * Event : change size.
          */
-        this.eventOnChangeSizeLabel = function () {
-            console.log("[tank.plugins.stats] => size label");
+        this.eventOnChangeSize = function () {
             var id = this.getAttribute("data-id");
-            _t.labels[id].size = this.value;
+            var type = this.getAttribute("data-type");
 
-            // Calling the refresh method
-            _self.refresh();
+            if( type === "types") {
+                _t.types[id].size = this.value;
+            }
+            else {
+                _t.labels[id].size = this.value;
+            }
+
+            // Redraw
+            _self.redraw();
         };
 
         /**
-         * Event : change color for type.
+         * Event : change shape.
          */
-        this.eventOnChangeColorType = function () {
-            console.log("[tank.plugins.stats] => color type");
+        this.eventOnChangeShape = function () {
             var id = this.getAttribute("data-id");
-            _t.types[id].color = '#' + this.value;
+            var type = this.getAttribute("data-type");
 
-            // Calling the refresh method
-            _self.refresh();
+            if( type === "types") {
+                _t.types[id].shape = this.value;
+            }
+
+            // Redraw
+            _self.redraw();
         };
 
         /**
-         * Event : change size for type.
+         * Calculate initialize labels & types array from the sigma graph data.
          */
-        this.eventOnChangeSizeType = function () {
-            console.log("[tank.plugins.stats] => size type");
-            var id = this.getAttribute("data-id");
-            _t.types[id].size = this.value;
+        this.calculateLabelEdgeFromSigma = function () {
+            var i, j, nodes, node, edges, edge, label;
 
-            // Calling the refresh method
-            _self.refresh();
-        };
+            // step 1 : reinitialize counter
+            _.each(_t.types, function (type) { type.count = 0; });
+            _.each(_t.labels, function (label) { label.count = 0; });
 
-        /**
-         * Event : change shape for type.
-         */
-        this.eventOnChangeShapeType = function () {
-            console.log("[tank.plugins.stats] => shape type");
-            var id = this.getAttribute("data-id");
-            _t.types[id].shape = this.value;
-
-            // Calling the refresh method
-            _self.refresh();
-        };
+            // Refresh label & type on tank instance from sigmajs graph
+            // =======================
+            // update types
+            edges = _t.sigmajs.graph.edges();
+            for (i in edges) {
+                edge = edges[i];
+                if (!_t.findTypeByName(edge.neo4j_type)) {
+                    // adding the current type to the list
+                    _t.types.push({
+                        name: edge.neo4j_type,
+                        color: tank.utils.randomcolor(),
+                        size: tank.settings.default_edge_size,
+                        shape: tank.settings.default_edge_shape,
+                        count: 1
+                    });
+                }
+                else {
+                    _t.findTypeByName(edge.neo4j_type).count += 1;
+                }
+            }
+            // update labels
+            nodes = _t.sigmajs.graph.nodes();
+            for (i in nodes) {
+                node = nodes[i];
+                for (j in node.neo4j_labels) {
+                    label = node.neo4j_labels[j];
+                    if (!_t.findLabelByName(label)) {
+                        // adding the current label to the list
+                        _t.labels.push({
+                            name: label,
+                            color: tank.utils.randomcolor(),
+                            size: tank.settings.default_node_size,
+                            count: 1
+                        });
+                    }
+                    else {
+                        _t.findLabelByName(label).count += 1;
+                    }
+                }
+                _t.sigmajs.graph.nodes()[i] = node;
+            }
+        }
 
         /**
          * Function that generate the render of this module.
          */
         this.render = function () {
-            var i, j, nodes, node, edges, edge, label;
+            var j;
+
+            _t.updateGraphEdge();
+            _t.updateGraphEdge();
 
             // templating
             // =======================
             var template;
             if (_t.sigmajs.graph) {
-
-                //FIXME: redo with underscore
-
-                // Refresh label & type on tank instance from sigmajs graph
-                // =======================
-                // update types
-                edges = _t.sigmajs.graph.edges();
-                for (i in edges) {
-                    edge = edges[i];
-                    if (!_t.findTypeByName(edge.neo4j_type)) {
-                        // adding the current type to the list
-                        _t.types.push({
-                            name: edge.neo4j_type,
-                            color: tank.utils.randomcolor(),
-                            size: tank.settings.default_edge_size,
-                            shape: tank.settings.default_edge_shape,
-                            count: 1
-                        });
-                    }
-                    else {
-                        _t.findTypeByName(edge.neo4j_type).count += 1;
-                    }
-                }
-                // update labels
-                nodes = _t.sigmajs.graph.nodes();
-                for (i in nodes) {
-                    node = nodes[i];
-                    for (j in node.neo4j_labels) {
-                        label = node.neo4j_labels[j];
-                        if (!_t.findLabelByName(label)) {
-                            // adding the current label to the list
-                            _t.labels.push({
-                                name: label,
-                                color: tank.utils.randomcolor(),
-                                size: tank.settings.default_node_size,
-                                count: 1
-                            });
-                        }
-                        else {
-                            _t.findLabelByName(label).count += 1;
-                        }
-                    }
-                    _t.sigmajs.graph.nodes()[i] = node;
-                }
                 template = templates.tank.plugins.stats.panel({ id: this.id, tank: _t, node_count: _t.sigmajs.graph.nodes().length, edge_count: _t.sigmajs.graph.edges().length });
             } else {
                 template = templates.tank.plugins.stats.panel({ id: this.id, tank: _t, node_count: 0, edge_count: 0});
@@ -173,28 +193,18 @@
 
             // Adding the listeners
             // =======================
-            // FIXME : refactor to be more generic ?
-            // On change color on label
-            for (j = 0; j < document.getElementsByClassName(_self.id + ' color labels').length; j++) {
-                document.getElementsByClassName('color labels')[j].addEventListener("change", this.eventOnChangeColorLabel, false);
+            // On change color
+            for (j = 0; j < document.getElementsByClassName(_self.id + ' color').length; j++) {
+                document.getElementsByClassName(_self.id + ' color')[j].addEventListener("change", this.eventOnChangeColor, false);
             }
             // On change size on label
-            for (j = 0; j < document.getElementsByClassName(_self.id + ' size labels').length; j++) {
-                document.getElementsByClassName('size labels')[j].addEventListener("change", this.eventOnChangeSizeLabel, false);
-            }
-            // On change color on type
-            for (j = 0; j < document.getElementsByClassName(_self.id + ' color types').length; j++) {
-                document.getElementsByClassName('color types')[j].addEventListener("change", this.eventOnChangeColorType, false);
-            }
-            // On change size on type
-            for (j = 0; j < document.getElementsByClassName(_self.id + ' size types').length; j++) {
-                document.getElementsByClassName('size types')[j].addEventListener("change", this.eventOnChangeSizeType, false);
+            for (j = 0; j < document.getElementsByClassName(_self.id + ' size').length; j++) {
+                document.getElementsByClassName(_self.id + ' size')[j].addEventListener("change", this.eventOnChangeSize, false);
             }
             // On change shape on type
-            for (j = 0; j < document.getElementsByClassName(_self.id + ' shape types').length; j++) {
-                document.getElementsByClassName('shape types')[j].addEventListener("change", this.eventOnChangeShapeType, false);
+            for (j = 0; j < document.getElementsByClassName(_self.id + ' shape').length; j++) {
+                document.getElementsByClassName(_self.id + ' shape')[j].addEventListener("change", this.eventOnChangeShape, false);
             }
-
             // Toggle modify form
             for (j = 0; j < document.getElementsByClassName(_self.id + "-modify").length; j++) {
                 document.getElementsByClassName(_self.id + "-modify")[j].addEventListener("click", this.eventToggleModifyForm, false);
@@ -212,6 +222,7 @@
      * The refresh function.
      */
     tank.classes.plugins.stats.prototype.refresh = function () {
+        this.calculateLabelEdgeFromSigma();
         this.render();
     };
 

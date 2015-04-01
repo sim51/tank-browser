@@ -37,7 +37,7 @@
      * Handler bar helper for select
      */
     Handlebars.registerHelper("circleStyle", function (color, radian, coef) {
-        var realRadian = Number.parseFloat(radian) + Number.parseFloat(coef) * 10;
+        var realRadian = Number.parseFloat(radian) + Number.parseFloat(coef) * 5;
         var style = "";
         style += "background-color:" + color + ";";
         style += "width:" + realRadian + "px; height:" + realRadian + "px;";
