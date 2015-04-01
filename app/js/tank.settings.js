@@ -50,7 +50,7 @@
             minEdgeSize: 0.1,
             maxEdgeSize: 2,
             enableEdgeHovering: true,
-            edgeHoverSizeRatio: 2,
+            edgeHoverSizeRatio: 3,
             edgeHoverExtremities: true,
             drawLabels: true,
             drawEdgeLabels: true
