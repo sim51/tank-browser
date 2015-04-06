@@ -38,6 +38,8 @@
 
         // Table of field that can be used of label on graph
         field_named: ['title', 'name' , 'label'],
+        // Node size depend of their degrees ?
+        node_relative_size: false,
         default_node_size : 5,
         default_edge_size : 2,
         default_edge_shape : 'tapered',
@@ -78,7 +80,7 @@
         graphtools : {
             ratioCoef : 1.5,
             rotateStep: 0.05,
-            animationDUration : 150
+            animationDuration : 150
         }
 
     };

@@ -128,6 +128,12 @@
                         break;
                     }
                 }
+
+                // changing the 'relative' size
+                if(this.settings.node_relative_size) {
+                    var degree = this.sigmajs.graph.degree(node.id);
+                    node.size = node.size * (1 + Math.log(degree));
+                }
             }
         };
 
