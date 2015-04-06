@@ -107,7 +107,7 @@
             else {
                 graphParent.classList.add("fullscreen");
             }
-
+            _t.sigmajs.refresh();
         };
 
         /**
