@@ -24,7 +24,7 @@
 
         // Plugin list
         // ===========================
-        plugins: ['query', 'codemirror', 'favorite', 'history', 'config' , 'stats', 'data'],
+        plugins: ['query', 'codemirror', 'favorite', 'history', 'config' , 'stats', 'data', 'graphtools'],
 
         // General config
         // ===========================
@@ -35,8 +35,7 @@
             password: 'admin'
         },
 
-        // Force atlas2 algo default time
-        forceAtlas2Time: 5000,
+
         // Table of field that can be used of label on graph
         field_named: ['title', 'name' , 'label'],
         default_node_size : 5,
@@ -55,6 +54,24 @@
             edgeHoverExtremities: true,
             drawLabels: true,
             drawEdgeLabels: true
+        },
+
+        // Force atlas2 algo default time
+        forceAtlas2Time: 5000,
+        // Force atalas2 configuration
+        forceAtlas2 : {
+            linLogMode: false,
+            outboundAttractionDistribution: false,
+            adjustSizes: true,
+            edgeWeightInfluence: 0,
+            scalingRatio: 1,
+            strongGravityMode: false,
+            gravity: 1,
+            slowDown: 1,
+            barnesHutOptimize: true,
+            barnesHutTheta: 0.5,
+            startingIterations: 1,
+            iterationsPerRender: 1
         }
 
     };

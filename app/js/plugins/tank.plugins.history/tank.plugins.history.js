@@ -7,7 +7,7 @@
     // Create panel package
     sigma.utils.pkg('tank.classes.plugins.history');
 
-    // init the history list on tank prortype;
+    // init the history list on tank prototype;
     tank.prototype.history = [];
 
     /**

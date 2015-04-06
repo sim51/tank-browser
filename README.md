@@ -14,6 +14,13 @@ A cypher browser based on sigmajs
  * Open your browser to the following url  : ```http://localhost:8001/app/#```
  
 NB: you must have a neo4j server running. You can configure the location of your server on the config panel.
+
+## TODO 
+
+ * Adding plugin fullscreen ? hide menu ?
+ * Adding plugin discover graph (on double click => adding neighbours node)
+ * Adding plugin move node ?
+ * Adding plugin for graph navigation (center view, start/stop forceatlas, zoom)
  
 
 

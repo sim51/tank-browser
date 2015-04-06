@@ -173,28 +173,15 @@
 
                 var t = tank.instance(tankId);
 
+                // refresh all plugin when data are loaded
                 t.refreshPlugins();
 
+                // upgrade graph data for display
                 t.updateGraphNode();
                 t.updateGraphEdge();
 
                 // starting forceatlas2 algo
-                s.startForceAtlas2({
-                    linLogMode: false,
-                    outboundAttractionDistribution: false,
-                    adjustSizes: true,
-                    edgeWeightInfluence: 0,
-                    scalingRatio: 1,
-                    strongGravityMode: false,
-                    gravity: 1,
-                    slowDown: 1,
-                    barnesHutOptimize: true,
-                    barnesHutTheta: 0.5,
-                    startingIterations: 1,
-                    iterationsPerRender: 1
-                });
-
-                s.refresh();
+                s.startForceAtlas2(t.settings.forceAtlas2);
 
                 // setting the timeout
                 window.setTimeout(function () {
@@ -202,7 +189,6 @@
                 }, t.settings.forceAtlas2Time, s);
 
             };
-
 
         };
 
