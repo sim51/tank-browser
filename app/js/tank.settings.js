@@ -72,6 +72,13 @@
             barnesHutTheta: 0.5,
             startingIterations: 1,
             iterationsPerRender: 1
+        },
+
+        // Configuration for plugin graphtool
+        graphtools : {
+            ratioCoef : 1.5,
+            rotateStep: 0.05,
+            animationDUration : 150
         }
 
     };

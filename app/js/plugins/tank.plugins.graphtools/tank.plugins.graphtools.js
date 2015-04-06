@@ -31,8 +31,8 @@
         this.eventOnClicZoomIn = function () {
             sigma.misc.animation.camera(
                 _t.sigmajs.cameras[0],
-                {ratio: _t.sigmajs.cameras[0].ratio / 1.5},
-                {duration: 150}
+                {ratio: _t.sigmajs.cameras[0].ratio / _t.settings.graphtools.ratioCoef},
+                {duration: _t.settings.graphtools.animationDuration}
             );
         };
 
@@ -42,8 +42,8 @@
         this.eventOnClicZoomOut = function () {
             sigma.misc.animation.camera(
                 _t.sigmajs.cameras[0],
-                {ratio: _t.sigmajs.cameras[0].ratio * 1.5},
-                {duration: 150}
+                {ratio: _t.sigmajs.cameras[0].ratio * _t.settings.graphtools.ratioCoef},
+                {duration: _t.settings.graphtools.animationDuration}
             );
         };
 
@@ -54,7 +54,29 @@
             sigma.misc.animation.camera(
                 _t.sigmajs.cameras[0],
                 {x: 0, y: 0, angle: 0, ratio: 1.2},
-                {duration: 150}
+                {duration: _t.settings.graphtools.animationDuration}
+            );
+        };
+
+        /**
+         * Event : on click rotate right.
+         */
+        this.eventOnClickRotateRight = function () {
+            sigma.misc.animation.camera(
+                _t.sigmajs.cameras[0],
+                {angle : _t.sigmajs.cameras[0].angle + _t.settings.graphtools.rotateStep},
+                {duration: _t.settings.graphtools.animationDuration}
+            );
+        };
+
+        /**
+         * Event : on click rotate left.
+         */
+        this.eventOnClickRotateLeft = function () {
+            sigma.misc.animation.camera(
+                _t.sigmajs.cameras[0],
+                {angle : _t.sigmajs.cameras[0].angle - _t.settings.graphtools.rotateStep},
+                {duration: _t.settings.graphtools.animationDuration}
             );
         };
 
@@ -117,12 +139,18 @@
             // Event listener
             // =======================
             document.getElementById(this.id +"-view").addEventListener("click", this.eventOnClickView, false);
+            // Zoom in / out
             document.getElementById(this.id +"-zoom-in").addEventListener("click", this.eventOnClicZoomIn, false);
             document.getElementById(this.id +"-zoom-out").addEventListener("click", this.eventOnClicZoomOut, false);
+            // Force atlas
             document.getElementById(this.id +"-forceatlas-start").addEventListener("click", this.eventOnClickStartForceAtlas, false);
             document.getElementById(this.id +"-forceatlas-stop").addEventListener("click", this.eventOnClickStopForceAtlas, false);
+            // Picture
             document.getElementById(this.id +"-window").addEventListener("click", this.eventOnClickWindow, false);
             document.getElementById(this.id +"-graph").addEventListener("click", this.eventOnClickGraph, false);
+            // Rotate
+            document.getElementById(this.id +"-rotate-right").addEventListener("click", this.eventOnClickRotateRight, false);
+            document.getElementById(this.id +"-rotate-left").addEventListener("click", this.eventOnClickRotateLeft, false);
 
         };
 
