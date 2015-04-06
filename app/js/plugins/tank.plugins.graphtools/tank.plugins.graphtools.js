@@ -97,6 +97,20 @@
         };
 
         /**
+         * Event : on click flullscreen
+         */
+        this.eventOnClickFullscreen = function () {
+            var graphParent = document.getElementById(_t.id + "-graph").parentNode;
+            if(graphParent.classList.contains("fullscreen")) {
+                graphParent.classList.remove("fullscreen");
+            }
+            else {
+                graphParent.classList.add("fullscreen");
+            }
+
+        };
+
+        /**
          * Function that generate the graph image.
          * @param clipped {{Boolean}}   generate a clipped image ?
          */
@@ -151,6 +165,8 @@
             // Rotate
             document.getElementById(this.id +"-rotate-right").addEventListener("click", this.eventOnClickRotateRight, false);
             document.getElementById(this.id +"-rotate-left").addEventListener("click", this.eventOnClickRotateLeft, false);
+            // Fullscreen
+            document.getElementById(this.id +"-fullscreen").addEventListener("click", this.eventOnClickFullscreen, false);
 
         };
 

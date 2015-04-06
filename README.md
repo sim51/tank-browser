@@ -20,7 +20,4 @@ NB: you must have a neo4j server running. You can configure the location of your
  * Adding plugin fullscreen ? hide menu ?
  * Adding plugin discover graph (on double click => adding neighbours node)
  * Adding plugin move node ?
- * Adding plugin for graph navigation (center view, start/stop forceatlas, zoom)
- 
-
 
