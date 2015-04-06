@@ -24,7 +24,7 @@
 
         // Plugin list
         // ===========================
-        plugins: ['query', 'codemirror', 'favorite', 'history', 'config' , 'stats', 'data', 'graphtools'],
+        plugins: ['query', 'codemirror', 'favorite', 'history', 'config' , 'stats', 'data', 'graphtools', 'sigma_dragnode'],
 
         // General config
         // ===========================

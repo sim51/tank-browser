@@ -65,6 +65,8 @@
     <script src="../node_modules/sigma/plugins/sigma.parsers.cypher/sigma.parsers.cypher.js"></script>
     <script src="../node_modules/sigma/plugins/sigma.layout.forceAtlas2/worker.js"></script>
     <script src="../node_modules/sigma/plugins/sigma.layout.forceAtlas2/supervisor.js"></script>
+    <script src="../node_modules/sigma/plugins/sigma.plugins.dragNodes/sigma.plugins.dragNodes.js"></script>
+    <script src="../node_modules/sigma/plugins/sigma.plugins.relativeSize/sigma.plugins.relativeSize.js"></script>
     <script src="../node_modules/sigma/plugins/sigma.renderers.customEdgeShapes/sigma.canvas.edges.dashed.js"></script>
     <script src="../node_modules/sigma/plugins/sigma.renderers.customEdgeShapes/sigma.canvas.edges.dotted.js"></script>
     <script src="../node_modules/sigma/plugins/sigma.renderers.customEdgeShapes/sigma.canvas.edges.parallel.js"></script>
@@ -147,13 +149,10 @@
         this.parentNode.classList.add('active');
         document.getElementById(this.getAttribute("data-target-id")).style.display = 'block';
     };
-
     for (var i = 0; i < document.getElementsByClassName('menu-link').length; i++) {
         document.getElementsByClassName('menu-link')[i].onclick = onClick;
     };
-
     document.getElementsByClassName('menu-link')[0].onclick();
-
 
 </script>
 

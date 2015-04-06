@@ -53,7 +53,7 @@
         this.eventOnClickView = function () {
             sigma.misc.animation.camera(
                 _t.sigmajs.cameras[0],
-                {x: 0, y: 0, angle: 0, ratio: 1.2},
+                {x: 0, y: 0, angle: _t.sigmajs.cameras[0].angle, ratio: 1.2},
                 {duration: _t.settings.graphtools.animationDuration}
             );
         };
