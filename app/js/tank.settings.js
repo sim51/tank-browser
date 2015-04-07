@@ -15,7 +15,7 @@
         // default query
         query: {
             title: 'Get some data',
-            query: 'MATCH (n) OPTIONAL MATCH (n)-[r]->(m) RETURN n,r,m LIMIT 100'
+            query: 'MATCH (n) OPTIONAL MATCH (n)-[r]->(m) RETURN n,r,m LIMIT 1'
         },
 
         // Custom labels & types array
@@ -24,7 +24,7 @@
 
         // Plugin list
         // ===========================
-        plugins: ['query', 'codemirror', 'favorite', 'history', 'config' , 'stats', 'data', 'graphtools', 'sigma_dragnode'],
+        plugins: ['query', 'codemirror', 'favorite', 'history', 'config' , 'stats', 'data', 'graphtools', 'sigma_dragnode', 'discoverGraph'],
 
         // General config
         // ===========================
@@ -51,11 +51,13 @@
             maxNodeSize: 10,
             minEdgeSize: 0.1,
             maxEdgeSize: 5,
+            defaultEdgeType: 'tapered',
             enableEdgeHovering: true,
             edgeHoverSizeRatio: 1,
             edgeHoverExtremities: true,
             drawLabels: true,
-            drawEdgeLabels: true
+            drawEdgeLabels: true,
+            doubleClickEnabled: false
         },
 
         // Force atlas2 algo default time
@@ -64,7 +66,7 @@
         forceAtlas2 : {
             linLogMode: false,
             outboundAttractionDistribution: false,
-            adjustSizes: true,
+            adjustSizes: false,
             edgeWeightInfluence: 0,
             scalingRatio: 1,
             strongGravityMode: false,

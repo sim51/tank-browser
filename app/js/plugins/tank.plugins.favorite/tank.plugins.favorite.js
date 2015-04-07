@@ -43,7 +43,7 @@
          */
         this.eventSaveFavorite = function () {
             console.log("[tank.plugins.favorite] => eventSaveFavorite");
-            if(_.findWhere(_t.favorites, { query: _t.query.query }) == undefined ) {
+            if(_.findWhere(_t.favorites, { query: _t.query.query }) === undefined ) {
                 _t.favorites.push(_t.query);
             }
             _self.render();

@@ -17,6 +17,9 @@ NB: you must have a neo4j server running. You can configure the location of your
 
 ## TODO 
 
- * Adding plugin discover graph (on double click => adding neighbours node)
- * Adding plugin move node ?
-
+ * discover module : choice of edge direction ?
+ * saving data into local storage ?
+ * export the generate graph as an embedded object ?
+ * adding documentation on how to setting it up
+ * adding example
+ *

@@ -47,6 +47,11 @@
             configurable: true
         });
 
+        if(!document.getElementById(this.id)) {
+            document.getElementById(this.id).innerHTML = '<div id="' + this.id + '"><i id="' + this.id + '-spinner"class="fa fa-spinner fa-pulse fa-3x"></i></div>';
+        }
+
+
         /**
          * Initialize all plugin
          */
@@ -194,8 +199,22 @@
                    s.stopForceAtlas2();
                 }, t.settings.forceAtlas2Time, s);
 
+                t.spinnerStop();
             };
 
+        };
+
+        /**
+         * Function that enable the spinner.
+         */
+        this.spinnerStart = function() {
+            document.getElementById(this.id + '-spinner').style.display = 'block';
+        };
+        /**
+         * Function that disable the spinner.
+         */
+        this.spinnerStop = function() {
+            document.getElementById(this.id + '-spinner').style.display = 'none';
         };
 
         // Init sigmajs instance
@@ -207,12 +226,16 @@
         // We call the refresh method
         this.refresh();
 
+        this.spinnerStop();
+
     };
 
     /**
      * Refresh the tank instance.
      */
     tank.prototype.refresh = function () {
+        this.spinnerStart();
+
         // Reinit sigmajs
         this.sigmajs.kill();
         this.initSigmajs();
