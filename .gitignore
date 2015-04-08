@@ -1,5 +1,7 @@
 *.iml
-
+.idea/
+.tmp/
+dist/
 /node_modules
 /build
 
