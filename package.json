@@ -19,7 +19,8 @@
         "gulp-sourcemaps": "^1.5.1",
         "gulp-handlebars ": "^4.0.0",
         "gulp-declare": "^0.3.0",
-        "gulp-wrap": "^0.11.0"
+        "gulp-wrap": "^0.11.0",
+        "gulp-inject": "1.2.0"
     },
     "dependencies": {
         "linkurious" : "https://github.com/Linkurious/linkurious.js/archive/v1.0.6.tar.gz",

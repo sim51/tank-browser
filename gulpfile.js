@@ -12,20 +12,98 @@ var gulp = require('gulp'),
     sourcemaps = require('gulp-sourcemaps'),
     handlebars = require('gulp-handlebars'),
     wrap = require('gulp-wrap'),
-    declare = require('gulp-declare');
+    declare = require('gulp-declare'),
+    inject = require('gulp-inject');
 
 application = {
+    name: "tank-browser",
     less: {
         src: ['./app/less/**/*.less'],
-        dest: "./build/css"
+        dest: "./dist/css/"
     },
     js: {
-        src: ['./app/js/**/*.js'],
-        dest: "./build/js/"
+        src: ["./app/js/**/*.js"],
+        deps: [
+            "./app/lib/jscolor/jscolor.js",
+            "./node_modules/underscore/underscore-min.js",
+            "./node_modules/handlebars/dist/handlebars.min.js",
+            // SIGMA
+            "./node_modules/sigma/src/sigma.core.js",
+            "./node_modules/sigma/src/conrad.js",
+            "./node_modules/sigma/src/utils/sigma.utils.js",
+            "./node_modules/sigma/src/utils/sigma.polyfills.js",
+            "./node_modules/sigma/src/sigma.settings.js",
+            "./node_modules/sigma/src/classes/sigma.classes.dispatcher.js",
+            "./node_modules/sigma/src/classes/sigma.classes.configurable.js",
+            "./node_modules/sigma/src/classes/sigma.classes.graph.js",
+            "./node_modules/sigma/src/classes/sigma.classes.camera.js",
+            "./node_modules/sigma/src/classes/sigma.classes.edgequad.js",
+            "./node_modules/sigma/src/captors/sigma.captors.mouse.js",
+            "./node_modules/sigma/src/classes/sigma.classes.quad.js",
+            "./node_modules/sigma/src/captors/sigma.captors.touch.js",
+            "./node_modules/sigma/src/renderers/sigma.renderers.canvas.js",
+            "./node_modules/sigma/src/renderers/sigma.renderers.webgl.js",
+            "./node_modules/sigma/src/renderers/sigma.renderers.svg.js",
+            "./node_modules/sigma/src/renderers/sigma.renderers.def.js",
+            "./node_modules/sigma/src/renderers/webgl/sigma.webgl.nodes.def.js",
+            "./node_modules/sigma/src/renderers/webgl/sigma.webgl.nodes.fast.js",
+            "./node_modules/sigma/src/renderers/webgl/sigma.webgl.edges.def.js",
+            "./node_modules/sigma/src/renderers/webgl/sigma.webgl.edges.fast.js",
+            "./node_modules/sigma/src/renderers/webgl/sigma.webgl.edges.arrow.js",
+            "./node_modules/sigma/src/renderers/canvas/sigma.canvas.labels.def.js",
+            "./node_modules/sigma/src/renderers/canvas/sigma.canvas.hovers.def.js",
+            "./node_modules/sigma/src/renderers/canvas/sigma.canvas.nodes.def.js",
+            "./node_modules/sigma/src/renderers/canvas/sigma.canvas.edges.curve.js",
+            "./node_modules/sigma/src/renderers/canvas/sigma.canvas.edges.arrow.js",
+            "./node_modules/sigma/src/renderers/canvas/sigma.canvas.edges.curvedArrow.js",
+            "./node_modules/sigma/src/renderers/canvas/sigma.canvas.edgehovers.def.js",
+            "./node_modules/sigma/src/renderers/canvas/sigma.canvas.edgehovers.curve.js",
+            "./node_modules/sigma/src/renderers/canvas/sigma.canvas.edgehovers.arrow.js",
+            "./node_modules/sigma/src/renderers/canvas/sigma.canvas.edgehovers.curvedArrow.js",
+            "./node_modules/sigma/src/renderers/canvas/sigma.canvas.extremities.def.js",
+            "./node_modules/sigma/src/renderers/svg/sigma.svg.utils.js",
+            "./node_modules/sigma/src/renderers/svg/sigma.svg.nodes.def.js",
+            "./node_modules/sigma/src/renderers/svg/sigma.svg.edges.def.js",
+            "./node_modules/sigma/src/renderers/svg/sigma.svg.edges.curve.js",
+            "./node_modules/sigma/src/renderers/svg/sigma.svg.labels.def.js",
+            "./node_modules/sigma/src/renderers/svg/sigma.svg.hovers.def.js",
+            "./node_modules/sigma/src/middlewares/sigma.middlewares.rescale.js",
+            "./node_modules/sigma/src/middlewares/sigma.middlewares.copy.js",
+            "./node_modules/sigma/src/misc/sigma.misc.animation.js",
+            "./node_modules/sigma/src/misc/sigma.misc.bindEvents.js",
+            "./node_modules/sigma/src/misc/sigma.misc.bindDOMEvents.js",
+            "./node_modules/sigma/src/misc/sigma.misc.drawHovers.js",
+            // SIGMA PLUGINS
+            "./node_modules/sigma/plugins/sigma.parsers.json/sigma.parsers.json.js",
+            "./node_modules/sigma/plugins/sigma.parsers.cypher/sigma.parsers.cypher.js",
+            "./node_modules/sigma/plugins/sigma.layout.forceAtlas2/worker.js",
+            "./node_modules/sigma/plugins/sigma.layout.forceAtlas2/supervisor.js",
+            "./node_modules/sigma/plugins/sigma.plugins.dragNodes/sigma.plugins.dragNodes.js",
+            "./node_modules/sigma/plugins/sigma.plugins.relativeSize/sigma.plugins.relativeSize.js",
+            "./node_modules/sigma/plugins/sigma.renderers.customEdgeShapes/sigma.canvas.edges.dashed.js",
+            "./node_modules/sigma/plugins/sigma.renderers.customEdgeShapes/sigma.canvas.edges.dotted.js",
+            "./node_modules/sigma/plugins/sigma.renderers.customEdgeShapes/sigma.canvas.edges.parallel.js",
+            "./node_modules/sigma/plugins/sigma.renderers.customEdgeShapes/sigma.canvas.edges.tapered.js",
+            "./node_modules/sigma/plugins/sigma.renderers.customEdgeShapes/sigma.canvas.edgehovers.dashed.js",
+            "./node_modules/sigma/plugins/sigma.renderers.customEdgeShapes/sigma.canvas.edgehovers.dotted.js",
+            "./node_modules/sigma/plugins/sigma.renderers.customEdgeShapes/sigma.canvas.edgehovers.parallel.js",
+            "./node_modules/sigma/plugins/sigma.renderers.customEdgeShapes/sigma.canvas.edgehovers.tapered.js",
+            "./node_modules/sigma/plugins/sigma.renderers.edgeLabels/settings.js",
+            "./node_modules/sigma/plugins/sigma.renderers.edgeLabels/sigma.canvas.edges.labels.def.js",
+            "./node_modules/sigma/plugins/sigma.renderers.edgeLabels/sigma.canvas.edges.labels.curve.js",
+            "./node_modules/sigma/plugins/sigma.renderers.edgeLabels/sigma.canvas.edges.labels.curvedArrow.js",
+            // LINKURIOUS
+            "./node_modules/linkurious/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.nodes.def.js",
+            "./node_modules/linkurious/plugins/sigma.plugins.image/sigma.plugins.image.js",
+            // CODEMIRROR
+            "./node_modules/codemirror/lib/codemirror.js",
+            "./node_modules/codemirror/mode/cypher/cypher.js"
+        ],
+        dest: "./dist/js/"
     },
     template: {
         src: ['./app/js/plugins/**/*.html'],
-        dest: "./build/js/",
+        dest: "./.tmp/js/",
         name: "templates.js"
     }
 };
@@ -57,6 +135,7 @@ gulp.task('less', function () {
     gulp.src('./app/less/main.less')
         .pipe(sourcemaps.init())
         .pipe(less())
+        .pipe(concat(application.name + '.min.css'))
         .pipe(minifyCSS())
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(application.less.dest));
@@ -65,26 +144,29 @@ gulp.task('less', function () {
 /**
  * Concat & minify JS application files.
  */
-gulp.task('js', function () {
-    gulp.src(application.js.src)
+gulp.task('js', ['template'], function () {
+    // Make only one concat / minify JS file
+    var src = application.js.deps;
+    src.push(application.template.dest + application.template.name);
+    src = src.concat(application.js.src);
+    gulp.src(src)
         .pipe(sourcemaps.init())
-        .pipe(concat('main.js'))
-        //.pipe(uglify())
+        .pipe(concat(application.name + '.min.js'))
+        .pipe(uglify())
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(application.js.dest));
 });
 
+/**
+ *  Compile handlerbar template in js file.
+ */
 gulp.task('template', function () {
-    var templateName = function (file) {
-        var name = file.path.split("/")[file.path.split("/").length - 1]
-        return name.replace(".html", "");
-    }
     gulp.src(application.template.src)
         .pipe(handlebars())
         .pipe(wrap('Handlebars.template(<%= contents %>)'))
         .pipe(declare({
             namespace: 'templates',
-            noRedeclare: true, // Avoid duplicate declarations
+            noRedeclare: true // Avoid duplicate declarations
         }))
         .pipe(concat(application.template.name))
         .pipe(gulp.dest(application.template.dest));
@@ -94,44 +176,19 @@ gulp.task('template', function () {
  * Clean task
  */
 gulp.task('clean', function () {
-    gulp.src('./build', {read: false}).pipe(clean());
+    gulp.src('./.tmp', {read: false}).pipe(clean());
+    gulp.src('./dist', {read: false}).pipe(clean());
 });
 
-
 /**
- * Gulp watch : on each change file.
+ * Package task.
  */
-gulp.task('watch', function () {
-
-    // JS watch
-    gulp.src(application.js.src, { read: false})
-        .pipe(watch({ emit: 'all' }, function (files) {
-            gulp.run("js");
-            gulp.run("jshint");
-            files
-                .pipe(jshint())
-                .pipe(connect.reload());
-        }));
-
-    // Less watch
-    gulp.src(application.less.src, { read: false})
-        .pipe(watch({ emit: 'all' }, function (files) {
-            gulp.run("less");
-            files.pipe(connect.reload());
-        }));
-
-    // Template watch
-    gulp.src(application.template.src, { read: false})
-        .pipe(watch({ emit: 'all' }, function (files) {
-            gulp.run("template");
-            files.pipe(connect.reload());
-        }));
-
-    // Html watch
-    gulp.src("./app/**/*.html", { read: false})
-        .pipe(watch({ emit: 'all' }, function (files) {
-            files.pipe(connect.reload());
-        }));
+gulp.task('inject', ['less', 'js'], function () {
+    console.log([application.js.dest + '**/*.js', application.less.dest + '**/*.css']);
+    // Inject js & css
+    gulp.src('./app/index.html')
+        .pipe(inject(gulp.src([application.js.dest + '**/*.js', application.less.dest + '**/*.css'], {read: false}), {ignorePath: 'dist', addRootSlash: false}))
+        .pipe(gulp.dest('./dist'));
 });
 
 /**
@@ -144,4 +201,32 @@ gulp.task('webserver', function () {
     });
 });
 
-gulp.task('default', ['clean', 'webserver', 'watch']);
+/**
+ * Gulp watch : on each change file.
+ */
+gulp.task('watch', function () {
+
+
+    // JS watch
+    gulp.src(application.js.src, { read: false})
+        .pipe(watch({ emit: 'all' }, function (files) {
+            gulp.run("jshint");
+        }));
+
+    gulp.src("./app/**/*.*", { read: false})
+        .pipe(watch({ emit: 'all' }, function (files) {
+            gulp.run("template");
+            files.pipe(connect.reload());
+        }));
+
+});
+
+/**
+ * Package the application
+ */
+gulp.task('package', ['inject']);
+
+/**
+ * The dev task => run a server with livereload, jshint report, ...
+ */
+gulp.task('default', ['package', 'webserver', 'watch']);
