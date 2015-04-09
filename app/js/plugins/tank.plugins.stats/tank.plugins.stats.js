@@ -18,7 +18,7 @@
         this.id = _t.id + "-stats";
 
         this.jscolor = jscolor;
-        jscolor.dir = './lib/jscolor/';
+        jscolor.dir = './assets/jscolor/';
         jscolor.getElementPos = function (e) {
             var e1 = e, e2 = e;
             var x = 0, y = 0;
