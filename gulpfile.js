@@ -13,7 +13,8 @@ var gulp = require('gulp'),
     handlebars = require('gulp-handlebars'),
     wrap = require('gulp-wrap'),
     declare = require('gulp-declare'),
-    inject = require('gulp-inject');
+    inject = require('gulp-inject'),
+    batch = require('gulp-batch');
 
 application = {
     name: "tank-browser",
@@ -106,23 +107,24 @@ application = {
         dest: ".tmp/js/",
         name: "templates.js"
     },
-    assets: [
-        { src: [ "app/assets/**/*.*" ], dest: "dist/assets" },
-        { src: [ "node_modules/font-awesome/**/*.*" ], dest: "dist/assets/font-awesome" }
-    ]
+    assets: {
+        src: [ "app/assets/**/*.*", "node_modules/font-awesome/@(fonts)/*.*" ],
+        dest: "dist/assets"
+    }
 };
 
 /**
  * LESS compilation.
  */
 gulp.task('less', function () {
-    gulp.src('./app/less/main.less')
+    var stream = gulp.src('./app/less/main.less')
         .pipe(sourcemaps.init())
         .pipe(less())
         .pipe(concat(application.name + '.min.css'))
         .pipe(minifyCSS())
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(application.less.dest));
+    return stream;
 });
 
 /**
@@ -134,19 +136,20 @@ gulp.task('js', ['template'], function () {
     src.push(application.template.dest + application.template.name);
     src = src.concat(application.js.src);
 
-    gulp.src(src)
+    var stream = gulp.src(src)
         .pipe(sourcemaps.init())
         .pipe(concat(application.name + '.min.js'))
         .pipe(uglify())
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(application.js.dest));
+    return stream;
 });
 
 /**
  *  Compile handlerbar template in js file.
  */
 gulp.task('template', function () {
-    gulp.src(application.template.src)
+    var stream = gulp.src(application.template.src)
         .pipe(handlebars())
         .pipe(wrap('Handlebars.template(<%= contents %>)'))
         .pipe(declare({
@@ -155,6 +158,7 @@ gulp.task('template', function () {
         }))
         .pipe(concat(application.template.name))
         .pipe(gulp.dest(application.template.dest));
+    return stream;
 });
 
 /**
@@ -170,29 +174,30 @@ gulp.task('jshint', function () {
  *  Copy assets to dist directory
  */
 gulp.task('assets', function () {
-    for( var index in application.assets) {
-        gulp.src(application.assets[index].src)
-            .pipe(gulp.dest(application.assets[index].dest));
-    }
+    var stream = gulp.src(application.assets.src)
+            .pipe(gulp.dest(application.assets.dest))
+            .pipe(connect.reload());
+    return stream;
 });
 
 /**
  * Clean task
  */
 gulp.task('clean', function () {
-    gulp.src('./.tmp', {read: false}).pipe(clean());
-    gulp.src('./dist', {read: false}).pipe(clean());
+    var stream = gulp.src(['./.tmp', './dist'], {read: false}).pipe(clean());
+    return stream;
 });
 
 /**
  * Package task.
  */
-gulp.task('inject', ['less', 'js'], function () {
-    console.log([application.js.dest + '**/*.js', application.less.dest + '**/*.css']);
+gulp.task('package', ['less', 'js'], function () {
     // Inject js & css
-    gulp.src('./app/index.html')
+    var stream = gulp.src('./app/index.html')
         .pipe(inject(gulp.src([application.js.dest + '**/*.js', application.less.dest + '**/*.css'], {read: false}), {ignorePath: 'dist', addRootSlash: false}))
-        .pipe(gulp.dest('./dist'));
+        .pipe(gulp.dest('./dist'))
+        .pipe(connect.reload());
+    return stream;
 });
 
 /**
@@ -210,28 +215,24 @@ gulp.task('webserver', function () {
  * Gulp watch : on each change file.
  */
 gulp.task('watch', function () {
+    // JS watch for report
+    watch(application.js.src, {read: false}, function () {
+        gulp.start("jshint");
+    });
 
-
-    // JS watch
-    gulp.src(application.js.src, { read: false})
-        .pipe(watch({ emit: 'all' }, function (files) {
-            gulp.run("jshint");
-        }));
-
-    gulp.src("./app/**/*.*", { read: false})
-        .pipe(watch({ emit: 'all' }, function (files) {
-            gulp.run("build");
-            files.pipe(connect.reload());
-        }));
+    // watching all file for 'rebuild' & reload
+    watch("./app/**/*.*",{read: false, verbose:true}, function () {
+        gulp.start("build");
+    });
 
 });
 
 /**
  * Build the application.
  */
-gulp.task('build', ['inject', 'assets']);
+gulp.task('build', ['package', 'assets']);
 
 /**
  * The dev task => run a server with livereload, jshint report, ...
  */
-gulp.task('default', ['webserver', 'watch']);
+gulp.task('default', ['build', 'webserver', 'watch']);
