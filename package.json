@@ -1,7 +1,16 @@
 {
+    "author": "Benoît Simard (@logisima)",
     "name": "tank-browser",
     "version": "0.0.1",
     "description" : "A neo4j cypher browser based on sigmajs",
+    "homepage": "https://github.com/sim51/tank-browser",
+    "bugs": "https://github.com/sim51/tank-browser/issues",
+    "repository": {
+        "type": "git",
+        "url": "http://github.com/sim51/tank-browser.git"
+    },
+    "license": "GPLv3",
+    "main": "dist/js/tank-browser.min.js",
     "devDependencies": {
         "gulp": "^3.0.0",
         "gulp-util": "^3.0.0",
@@ -33,5 +42,9 @@
         "sigma": "https://github.com/sim51/sigma.js/archive/master.tar.gz",
         "handlebars": "^3.0.0",
         "file-dependencies": "^1.0.0"
+    },
+    "scripts": {
+        "start": "gulp",
+        "build": "gulp build"
     }
 }
