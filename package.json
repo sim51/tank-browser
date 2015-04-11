@@ -3,6 +3,7 @@
     "name": "tank-browser",
     "version": "0.1.1",
     "description" : "A neo4j cypher browser based on sigmajs",
+    "keywords" : ["neo4j", "sigma", "sigmajs", "graph", "browser", "cypher"],
     "homepage": "https://github.com/sim51/tank-browser",
     "bugs": "https://github.com/sim51/tank-browser/issues",
     "repository": {
