@@ -63,8 +63,11 @@ function makeNewVersion() {
 ##############################################################################
 function build() {
     # clean the repo
+    echo "Cleaning project"
     gulp clean
+
     # Build project
+    echo "Building project"
     gulp build
 }
 
@@ -81,9 +84,11 @@ function publish() {
     fi
 
     # publsih on NPM
+    echo "NPM publish"
     npm publish
 
     # Create a git tag
+    echo "Create & push git tag"
     git tag $1
     git push --tags
 }
