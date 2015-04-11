@@ -1,19 +1,6 @@
 #!/bin/bash
 
 ##############################################################################
-# Test the last result
-##############################################################################
-function testResult() {
-	if [ $? -ne 0 ]; then
-		echo -e "[KO]"
-		exit 3
-	else
-		echo -e "[OK]"
-	fi
-}
-
-
-##############################################################################
 # Read the version in package.json and make an array of major.minor.patch
 ##############################################################################
 function readVersion() {
@@ -101,6 +88,19 @@ function publish() {
     git push --tags
 }
 
+##############################################################################
+# Deploy function
+#
+#   @param type The type of the new version (ie. Major, Minor or patch)
+#   @param major version
+#   @param minor version
+#   @param patch version
+##############################################################################
+function deploy() {
+    VERSION=$(makeNewVersion $1 $2 $3 $4)
+    build
+    publish $VERSION
+}
 
 ##############################################################################
 # MAIN
@@ -110,30 +110,22 @@ function publish() {
 CURRENT_ARRAY_VERSION=$(readVersion)
 echo "Current version is $CURRENT_ARRAY_VERSION"
 
-# Ask user this version is major, minor or a patch
+# Ask user if this version is major, minor or a patch
 echo "This script will publish a new version on NPM"
 echo "Do you want to make a new version : "
 select type in "Major" "Minor" "Patch" "Publish"; do
     case $type in
         Major )
-            VERSION=$(makeNewVersion 'Major' $CURRENT_ARRAY_VERSION)
-            build
-            publish $VERSION
+            deploy 'Major' $CURRENT_ARRAY_VERSION
             exit;;
         Minor )
-            VERSION=$(makeNewVersion 'Minor' $CURRENT_ARRAY_VERSION)
-            build
-            publish $VERSION
+            deploy 'Minor' $CURRENT_ARRAY_VERSION
             exit;;
         Patch )
-            VERSION=$(makeNewVersion 'Patch' $CURRENT_ARRAY_VERSION)
-            build
-            publish $VERSION
+            deploy 'Patch' $CURRENT_ARRAY_VERSION
             exit;;
         Publish )
-            VERSION=$(makeNewVersion '' $CURRENT_ARRAY_VERSION)
-            build
-            publish $VERSION
+            deploy 'RAS' $CURRENT_ARRAY_VERSION
             exit;;
     esac
 done
