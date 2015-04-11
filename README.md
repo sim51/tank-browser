@@ -15,7 +15,7 @@ On the top of this library, I have made a browser for neo4j. I have almost the s
 ## How to use it 
 
  * Download the following archive : http://registry.npmjs.org/tank-browser/-/tank-browser-{VERSION}.tgz (change the version)
- * Open the file *index.html* into your browser
+ * Open the file *./dist/index.html* into your browser
  * Configure your database (location, user & password) on the configuration panel  
 
 ## How to build
