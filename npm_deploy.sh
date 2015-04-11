@@ -103,7 +103,10 @@ function publish() {
 function deploy() {
     VERSION=$(makeNewVersion $1 $2 $3 $4)
     build
-    git commit -am "Changing version to $VERSION"
+    if [[ $1 != 'RAS' ]]
+    then
+        git commit -am "Changing version to $VERSION"
+    fi
     publish $VERSION
 }
 
