@@ -88,7 +88,7 @@ function publish() {
     npm publish
 
     # Create a git tag
-    echo "Create & push git tag"
+    echo "Create & push tag $1"
     git tag $1
     git push --tags
 }

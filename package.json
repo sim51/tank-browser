@@ -1,7 +1,7 @@
 {
     "author": "Benoît Simard (@logisima)",
     "name": "tank-browser",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "description" : "A neo4j cypher browser based on sigmajs",
     "keywords" : ["neo4j", "sigma", "sigmajs", "graph", "browser", "cypher"],
     "homepage": "https://github.com/sim51/tank-browser",
