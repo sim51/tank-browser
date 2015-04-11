@@ -53,7 +53,6 @@ function makeNewVersion() {
 
     # Replace in package.json
     sed -i "s/\"version\": \"\(.*\)\",/\"version\": \"$NEW_VERSION\",/g" ./package.json
-    git commit -am "Changing version to $NEW_VERSION"
     echo $NEW_VERSION
 }
 
@@ -104,6 +103,7 @@ function publish() {
 function deploy() {
     VERSION=$(makeNewVersion $1 $2 $3 $4)
     build
+    git commit -am "Changing version to $VERSION"
     publish $VERSION
 }
 
