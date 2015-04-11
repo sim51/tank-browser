@@ -53,7 +53,7 @@ function makeNewVersion() {
 
     # Replace in package.json
     sed -i "s/\"version\": \"\(.*\)\",/\"version\": \"$NEW_VERSION\",/g" ./package.json
-    #git commit -am "Changing version to $NEW_VERSION"
+    git commit -am "Changing version to $NEW_VERSION"
     echo $NEW_VERSION
 }
 
