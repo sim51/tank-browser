@@ -1,0 +1,140 @@
+#!/bin/bash
+
+##############################################################################
+# Test the last result
+##############################################################################
+function testResult() {
+	if [ $? -ne 0 ]; then
+		echo -e "[KO]"
+		exit 3
+	else
+		echo -e "[OK]"
+	fi
+}
+
+
+##############################################################################
+# Read the version in package.json and make an array of major.minor.patch
+##############################################################################
+function readVersion() {
+    VERSION_STRING=`cat package.json | grep "version" | sed -e 's/[ ^I]*"version": "\(.*\)"\(.*\)/\1/g'`
+    VERSION=`echo ${VERSION_STRING} | tr "." "\n"`
+    echo $VERSION
+}
+
+
+##############################################################################
+# Make a new version :
+#  * increment the version number into package.jso
+#  * commit it
+#  * return the new version
+#
+#   @param type The type of the new version (ie. Major, Minor or patch)
+#   @param major version
+#   @param minor version
+#   @param patch version
+##############################################################################
+function makeNewVersion() {
+    if [ -z "$1" ]; then
+        echo "Type of version is mandatory for the function `makeNewVersion`"
+        exit 3
+    fi
+
+    # Rename var
+    major=$2
+    minor=$3
+    patch=$4
+
+    case $1 in
+        Major )
+            major=$((${major##}+1))
+            minor=0
+            patch=0
+            ;;
+        Minor )
+            minor=$((${minor##}+1))
+            patch=0
+            ;;
+        Patch )
+            patch=$((${patch##}+1))
+            ;;
+        * )
+            exit;;
+    esac
+
+    NEW_VERSION="$major.$minor.$patch"
+
+    # Replace in package.json
+    sed -i "s/\"version\": \"\(.*\)\",/\"version\": \"$NEW_VERSION\",/g" ./package.json
+    #git commit -am "Changing version to $NEW_VERSION"
+    echo $NEW_VERSION
+}
+
+
+##############################################################################
+# Build the project
+##############################################################################
+function build() {
+    # clean the repo
+    gulp clean
+    # Build project
+    gulp build
+}
+
+
+##############################################################################
+# Publish the project
+#
+#   @param $1 the string version to publish
+##############################################################################
+function publish() {
+    if [ -z "$1" ]; then
+        echo "Version is mandatory for the function `publish`"
+        exit 3
+    fi
+
+    # publsih on NPM
+    npm publish
+
+    # Create a git tag
+    git tag $1
+    git push --tags
+}
+
+
+##############################################################################
+# MAIN
+##############################################################################
+
+# Get the current version
+CURRENT_ARRAY_VERSION=$(readVersion)
+echo "Current version is $CURRENT_ARRAY_VERSION"
+
+# Ask user this version is major, minor or a patch
+echo "This script will publish a new version on NPM"
+echo "Do you want to make a new version : "
+select type in "Major" "Minor" "Patch" "Publish"; do
+    case $type in
+        Major )
+            VERSION=$(makeNewVersion 'Major' $CURRENT_ARRAY_VERSION)
+            build
+            publish $VERSION
+            exit;;
+        Minor )
+            VERSION=$(makeNewVersion 'Minor' $CURRENT_ARRAY_VERSION)
+            build
+            publish $VERSION
+            exit;;
+        Patch )
+            VERSION=$(makeNewVersion 'Patch' $CURRENT_ARRAY_VERSION)
+            build
+            publish $VERSION
+            exit;;
+        Publish )
+            VERSION=$(makeNewVersion '' $CURRENT_ARRAY_VERSION)
+            build
+            publish $VERSION
+            exit;;
+    esac
+done
+
