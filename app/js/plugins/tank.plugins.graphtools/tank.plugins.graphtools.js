@@ -22,6 +22,7 @@
         if(!document.getElementById(this.id)) {
             var domContainer = document.createElement("div");
             domContainer.setAttribute("id", this.id);
+            domContainer.setAttribute("class", "tank-container-graphtools");
             document.getElementById(_t.id).appendChild(domContainer);
         }
 

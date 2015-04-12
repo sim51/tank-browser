@@ -23,6 +23,7 @@
         if(!document.getElementById(this.id)) {
             var domContainer = document.createElement("div");
             domContainer.setAttribute("id", this.id);
+            domContainer.setAttribute("class", "tank-container-data");
             document.getElementById(_t.id).appendChild(domContainer);
         }
 

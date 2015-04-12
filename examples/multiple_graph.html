@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Tank : a Neo4j cypher graph browser based on sigmajs">
+    <meta name="author" content="Benoît Simard (@logisima)">
+
+    <link rel="stylesheet" href="../dist/css/tank-browser.min.css">
+    <script src="../dist/js/tank-browser.min.js"></script>
+    <title>Tank browser : display two simple graph</title>
+
+    <style>
+        #my-tank-container-graph, #my-tank2-container-graph {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div id="my-tank-container" class="tank-container" style="width:50%;height:100%;float: left;"></div>
+
+<div id="my-tank2-container" class="tank-container" style="width:50%;height:100%;float: left;"></div>
+
+
+<script>
+
+    /**
+     * Initiate tank
+     */
+    var myTank = new tank( {
+        id: 'my-tank-container',
+        query: {
+            query: 'MATCH (n) OPTIONAL MATCH (n)-[r]->(m) RETURN n,r,m LIMIT 50'
+        },
+        neo4j : {
+            url : 'http://localhost:7474',
+            user: 'neo4j',
+            password: 'admin'
+        },
+        plugins: ['data', 'sigma_dragnode', 'graphtools']
+    });
+
+    /**
+     * Initiate tank2
+     */
+    var myTank2 = new tank( {
+        id: 'my-tank2-container',
+        query: {
+            query: 'MATCH (n) OPTIONAL MATCH (n)-[r]->(m) RETURN n,r,m LIMIT 100'
+        },
+        neo4j : {
+            url : 'http://localhost:7474',
+            user: 'neo4j',
+            password: 'admin'
+        },
+        plugins: ['data', 'graphtools'],
+        node_relative_size: false,
+        sigmajs: {
+            drawLabels: false,
+            drawEdgeLabels: false
+        }
+    });
+
+</script>
+
+</body>
+</html>
+

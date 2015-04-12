@@ -35,6 +35,8 @@
             password: 'admin'
         },
 
+        // List of favorites query
+        favorites: [],
 
         // Table of field that can be used of label on graph
         field_named: ['title', 'name' , 'label'],

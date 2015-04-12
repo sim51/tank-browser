@@ -7,7 +7,7 @@
     // Create panel package
     sigma.utils.pkg('tank.classes.plugins.favorite');
 
-    // init the favorite list on tank prortype;
+    // init the favorite list on tank prototype;
     tank.prototype.favorites = [];
 
     /**
@@ -20,6 +20,9 @@
             _t = tank;
 
         this.id = _t.id + "-favorite";
+
+        // init favorites array
+        _t.favorites = _t.settings.favorites;
 
         // Create the dom query container if it not exist
         if(!document.getElementById(this.id)) {
@@ -69,8 +72,8 @@
             var template = templates.tank.plugins.favorite.panel({ id: this.id, tank: _t});
             document.getElementById(this.id).innerHTML = template;
 
-            // Save button into the render of query
-            if(!document.getElementById(this.id + "-save")) {
+            // Save button into the render of query (if exist)
+            if(!document.getElementById(this.id + "-save") && _t.plugins.query) {
                 template = templates.tank.plugins.favorite.button({ id: this.id, tank: _t});
                 document.getElementById(_t.plugins.query.id + "-run").insertAdjacentHTML('beforebegin', template);
             }
@@ -86,7 +89,9 @@
                 document.getElementsByClassName(this.id + "-remove")[j].addEventListener("click", this.eventRemoveFavorite, false);
             }
             // On link to save the current query
-            document.getElementById(this.id +"-save").addEventListener("click", this.eventSaveFavorite, false);
+            if(_t.plugins.query) {
+                document.getElementById(this.id + "-save").addEventListener("click", this.eventSaveFavorite, false);
+            }
         };
 
         _self.refresh();

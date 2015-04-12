@@ -137,10 +137,10 @@ gulp.task('js', ['template'], function () {
     src = src.concat(application.js.src);
 
     var stream = gulp.src(src)
-        .pipe(sourcemaps.init())
+        //.pipe(sourcemaps.init())
         .pipe(concat(application.name + '.min.js'))
-        .pipe(uglify())
-        .pipe(sourcemaps.write('.'))
+        //.pipe(uglify())
+        //.pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(application.js.dest));
     return stream;
 });

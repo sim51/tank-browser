@@ -17,7 +17,7 @@
     tank.utils.extend = function () {
         var i,
             k,
-            res = {},
+            res = arguments[0],
             l = arguments.length;
 
         for (i = l - 1; i >= 0; i--) {

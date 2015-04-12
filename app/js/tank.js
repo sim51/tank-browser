@@ -48,7 +48,7 @@
         });
 
         if(!document.getElementById(this.id)) {
-            document.getElementById(this.id).innerHTML = '<div id="' + this.id + '"><i id="' + this.id + '-spinner"class="fa fa-spinner fa-pulse fa-3x"></i></div>';
+            document.getElementById(this.id).innerHTML = '<div id="' + this.id + '" class=\"tank-container\"><i id="' + this.id + '-spinner"class="fa fa-spinner fa-pulse fa-3x"></i></div>';
         }
 
 
@@ -208,13 +208,17 @@
          * Function that enable the spinner.
          */
         this.spinnerStart = function() {
-            document.getElementById(this.id + '-spinner').style.display = 'block';
+            if(document.getElementById(this.id + '-spinner')) {
+                document.getElementById(this.id + '-spinner').style.display = 'block';
+            }
         };
         /**
          * Function that disable the spinner.
          */
         this.spinnerStop = function() {
-            document.getElementById(this.id + '-spinner').style.display = 'none';
+            if(document.getElementById(this.id + '-spinner')) {
+                document.getElementById(this.id + '-spinner').style.display = 'none';
+            }
         };
 
         // Init sigmajs instance
