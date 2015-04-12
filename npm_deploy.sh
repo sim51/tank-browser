@@ -132,9 +132,6 @@ select type in "Major" "Minor" "Patch" "Publish"; do
         Patch )
             deploy 'Patch' $CURRENT_ARRAY_VERSION
             exit;;
-        Publish )
-            deploy 'RAS' $CURRENT_ARRAY_VERSION
-            exit;;
     esac
 done
 
