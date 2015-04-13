@@ -34,7 +34,7 @@
         this.eventRunHistory = function () {
             console.log("[tank.plugins.history] => eventRunHistory");
             var itemId = this.getAttribute("data-id");
-            _t.query = _t.history[itemId].query;
+            _t.query = _t.history[itemId];
             _t.refresh();
         };
 
