@@ -121,7 +121,7 @@ echo "Current version is $CURRENT_ARRAY_VERSION"
 # Ask user if this version is major, minor or a patch
 echo "This script will publish a new version on NPM"
 echo "Do you want to make a new version : "
-select type in "Major" "Minor" "Patch" "Publish"; do
+select type in "Major" "Minor" "Patch" ; do
     case $type in
         Major )
             deploy 'Major' $CURRENT_ARRAY_VERSION
