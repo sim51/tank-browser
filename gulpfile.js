@@ -13,8 +13,7 @@ var gulp = require('gulp'),
     handlebars = require('gulp-handlebars'),
     wrap = require('gulp-wrap'),
     declare = require('gulp-declare'),
-    inject = require('gulp-inject'),
-    batch = require('gulp-batch');
+    inject = require('gulp-inject');
 
 application = {
     name: "tank-browser",
@@ -43,14 +42,9 @@ application = {
             "node_modules/sigma/src/classes/sigma.classes.quad.js",
             "node_modules/sigma/src/captors/sigma.captors.touch.js",
             "node_modules/sigma/src/renderers/sigma.renderers.canvas.js",
-            "node_modules/sigma/src/renderers/sigma.renderers.webgl.js",
             "node_modules/sigma/src/renderers/sigma.renderers.svg.js",
+            "node_modules/sigma/src/renderers/sigma.renderers.webgl.js",
             "node_modules/sigma/src/renderers/sigma.renderers.def.js",
-            "node_modules/sigma/src/renderers/webgl/sigma.webgl.nodes.def.js",
-            "node_modules/sigma/src/renderers/webgl/sigma.webgl.nodes.fast.js",
-            "node_modules/sigma/src/renderers/webgl/sigma.webgl.edges.def.js",
-            "node_modules/sigma/src/renderers/webgl/sigma.webgl.edges.fast.js",
-            "node_modules/sigma/src/renderers/webgl/sigma.webgl.edges.arrow.js",
             "node_modules/sigma/src/renderers/canvas/sigma.canvas.labels.def.js",
             "node_modules/sigma/src/renderers/canvas/sigma.canvas.hovers.def.js",
             "node_modules/sigma/src/renderers/canvas/sigma.canvas.nodes.def.js",
@@ -62,12 +56,6 @@ application = {
             "node_modules/sigma/src/renderers/canvas/sigma.canvas.edgehovers.arrow.js",
             "node_modules/sigma/src/renderers/canvas/sigma.canvas.edgehovers.curvedArrow.js",
             "node_modules/sigma/src/renderers/canvas/sigma.canvas.extremities.def.js",
-            "node_modules/sigma/src/renderers/svg/sigma.svg.utils.js",
-            "node_modules/sigma/src/renderers/svg/sigma.svg.nodes.def.js",
-            "node_modules/sigma/src/renderers/svg/sigma.svg.edges.def.js",
-            "node_modules/sigma/src/renderers/svg/sigma.svg.edges.curve.js",
-            "node_modules/sigma/src/renderers/svg/sigma.svg.labels.def.js",
-            "node_modules/sigma/src/renderers/svg/sigma.svg.hovers.def.js",
             "node_modules/sigma/src/middlewares/sigma.middlewares.rescale.js",
             "node_modules/sigma/src/middlewares/sigma.middlewares.copy.js",
             "node_modules/sigma/src/misc/sigma.misc.animation.js",
@@ -137,10 +125,10 @@ gulp.task('js', ['template'], function () {
     src = src.concat(application.js.src);
 
     var stream = gulp.src(src)
-        //.pipe(sourcemaps.init())
+        .pipe(sourcemaps.init())
         .pipe(concat(application.name + '.min.js'))
-        //.pipe(uglify())
-        //.pipe(sourcemaps.write('.'))
+        .pipe(uglify())
+        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(application.js.dest));
     return stream;
 });
