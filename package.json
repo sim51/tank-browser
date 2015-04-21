@@ -40,7 +40,7 @@
         "bootstrap": "^3.0.0",
         "codemirror": "^5.0.0",
         "font-awesome" : "^4.0.0",
-        "sigma": "https://github.com/sim51/sigma.js/archive/master.tar.gz",
+        "sigma": "https://github.com/jacomyal/sigma.js/archive/master.tar.gz",
         "handlebars": "^3.0.0",
         "file-dependencies": "^1.0.0"
     },

@@ -177,10 +177,9 @@
          * Closure callback function for sigma & neo4j execute cypher method.
          *
          * @param s {Sigma} The sigmajs instance
-         * @param g {Graph} The graph object representation
          */
         this.onGraphDataLoaded = function (tankId) {
-            return function (s, g) {
+            return function (s) {
 
                 var t = tank.instance(tankId);
 
@@ -246,9 +245,11 @@
 
         if (this.query && this.query.query) {
             sigma.neo4j.cypher(
-                this.settings.neo4j.url,
-                this.settings.neo4j.user,
-                this.settings.neo4j.password,
+                {
+                    url: this.settings.neo4j.url,
+                    user: this.settings.neo4j.user,
+                    password : this.settings.neo4j.password
+                },
                 this.query.query,
                 this.sigmajs,
                 this.onGraphDataLoaded(this.id)
