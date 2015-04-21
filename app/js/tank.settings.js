@@ -58,7 +58,7 @@
             edgeHoverSizeRatio: 1,
             edgeHoverExtremities: true,
             drawLabels: true,
-            drawEdgeLabels: true,
+            drawEdgeLabels: false,
             doubleClickEnabled: false
         },
 
