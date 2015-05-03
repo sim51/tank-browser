@@ -62,9 +62,11 @@
                     _t.spinnerStart();
                     var cypher = query.replace('@id@', e.data.node.id);
                     sigma.neo4j.cypher(
-                        _t.settings.neo4j.url,
-                        _t.settings.neo4j.user,
-                        _t.settings.neo4j.password,
+                        {
+                          url: _t.settings.neo4j.url,
+                          user: _t.settings.neo4j.user,
+                          password : _t.settings.neo4j.password
+                        },
                         cypher,
                         undefined,
                         _self.mergeData(e.data.node));
